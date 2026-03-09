@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="apps/web/public/quickcred-banner.png" alt="QuickCred Banner" width="100%" />
+</div>
+
 # QuickCred – Fintech Admin System
 
 QuickCred is a **Loan Management System** for small lending businesses. It allows administrators to manage customers, issue loans, and track 12-week installment repayments.

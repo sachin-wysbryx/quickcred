@@ -30,5 +30,8 @@ export const generateRepaymentSchedule = (loanId: string, totalRepayment: number
         });
     }
 
+
     return repayments;
 };
+
+export * from "./email/send-otp";
