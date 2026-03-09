@@ -1,208 +1,85 @@
-# QuickCred – Loan & Installment Management System
+# QuickCred – Fintech Admin System
 
-QuickCred is a web-based **Loan and Installment Management System** designed for small lending businesses.
-It allows administrators to manage customers, issue loans, track weekly repayments, and monitor overall business performance through a centralized dashboard.
+QuickCred is a **Loan Management System** for small lending businesses. It allows administrators to manage customers, issue loans, and track 12-week installment repayments.
 
-The system is built with modern web technologies to ensure scalability, maintainability, and efficient financial tracking.
+## 🏗 Project Architecture
 
----
+This project is organized as a **pnpm workspace** monorepo:
 
-## 🚀 Features
+- `apps/web`: Next.js admin dashboard (App Router, TailwindCSS, TypeScript).
+- `packages/db`: Prisma ORM and database schema shared across the monorepo.
+- `packages/ui`: Shared UI components (React).
+- `packages/utils`: Shared helper functions and business logic.
 
-* **Admin Authentication**
-
-  * Secure login system for the administrator.
-
-* **Customer Management**
-
-  * Add new customers
-  * Edit customer information
-  * View customer details
-
-* **Loan Management**
-
-  * Create loans for customers
-  * Automatically calculate loan interest
-  * Generate repayment schedules
-
-* **Weekly Installment Tracking**
-
-  * 12-week installment system
-  * Record weekly payments
-  * Track pending payments
-
-* **Loan Status Monitoring**
-
-  * Active Loans
-  * Completed Loans
-  * Overdue Loans
-
-* **Dashboard Analytics**
-
-  * Total Customers
-  * Active Loans
-  * Completed Loans
-  * Pending Payments
-  * Total Profit
-
----
-
-## 💰 Example Loan Model
-
-| Field                    | Value    |
-| ------------------------ | -------- |
-| Loan Amount              | ₹10,000  |
-| Interest                 | ₹1,500   |
-| Amount Given to Customer | ₹8,500   |
-| Total Repayment          | ₹10,000  |
-| Duration                 | 12 Weeks |
-| Weekly Installment       | ₹833.33  |
-
----
-
-## 🏗 Tech Stack
-
-**Frontend**
-
-* Next.js
-* React
-* TypeScript
-* Tailwind CSS
-
-**Backend**
-
-* Next.js API Routes / Node.js
-
-**Database**
-
-* PostgreSQL
-
-**ORM**
-
-* Prisma
-
-**Hosting**
-
-* Vercel (Frontend + APIs)
-* Neon / Supabase PostgreSQL
-
----
-
-## 📂 Project Structure
+## 📂 Folder Structure
 
 ```
 quickcred/
 │
-├── apps
-│   └── web                # Next.js application
+├── apps/
+│   └── web/                # Next.js Application
 │
-├── packages
-│   └── db                 # Prisma schema and database client
+├── packages/
+│   ├── db/                 # Prisma & Database Client
+│   ├── ui/                 # Shared UI Components
+│   └── utils/              # Shared Helper Functions
 │
-├── prisma
-│   └── schema.prisma
+├── docs/                   # System & Database Documentation
 │
-├── public
+├── .github/                # CI/CD Workflows
 │
-├── src
-│   ├── components
-│   ├── modules
-│   ├── services
-│   └── utils
-│
-└── README.md
+├── package.json            # Root configuration
+├── pnpm-workspace.yaml     # Workspace definition
+└── tsconfig.json           # Root TypeScript configuration
 ```
 
----
+## 🚀 Getting Started
 
-## ⚙️ Installation
+### Prerequisites
 
-Clone the repository:
+- Node.js (v18+)
+- pnpm (v10+)
+- MongoDB Atlas (or local MongoDB instance)
 
-```bash
-git clone https://github.com/your-username/quickcred.git
-cd quickcred
-```
+### Installation
 
-Install dependencies:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd quickcred
+   ```
 
-```bash
-pnpm install
-```
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-Run the development server:
+3. Setup environment variables:
+   Create a `.env` file in the root with your MongoDB connection string:
+   ```env
+   DATABASE_URL="mongodb+srv://<username>:<password>@cluster.mongodb.net/quickcred"
+   ```
 
-```bash
-pnpm dev
-```
+4. Push the database schema:
+   ```bash
+   pnpm db:push
+   ```
 
----
+5. Start the development server:
+   ```bash
+   pnpm dev
+   ```
 
-## 🗄 Database Setup
+## 🛠 Project Scripts
 
-1. Create a PostgreSQL database (Neon / Supabase recommended)
-2. Add the connection string in `.env`
+- `pnpm dev`: Start the web app in development mode.
+- `pnpm build`: Build the web app for production.
+- `pnpm start`: Start the production server.
+- `pnpm lint`: Run ESLint across the workspace.
 
-```
-DATABASE_URL="postgresql://user:password@host:port/database"
-```
+## 📑 Documentation
 
-Run migrations:
-
-```bash
-pnpm prisma migrate dev
-```
-
-Generate Prisma client:
-
-```bash
-pnpm prisma generate
-```
-
----
-
-## 📊 System Workflow
-
-1. Admin logs into the system
-2. Admin adds a new customer
-3. Admin creates a loan for the customer
-4. System automatically generates **12 weekly installments**
-5. Admin records weekly payments
-6. Loan status changes to **Completed** once all installments are paid
-
----
-
-## 📅 Development Roadmap
-
-| Phase                | Estimated Time |
-| -------------------- | -------------- |
-| Planning             | 1 Day          |
-| Database Setup       | 1 Day          |
-| Backend Development  | 3 Days         |
-| Frontend Development | 4 Days         |
-| Testing & Fixes      | 2 Days         |
-
----
-
-## 🔐 User Roles
-
-Currently the system supports:
-
-* **Admin** – Full control over customers, loans, repayments, and dashboard analytics.
-
----
-
-## 📈 Future Improvements
-
-* Payment integration (UPI / Razorpay)
-* Customer portal
-* Automated payment reminders
-* Financial reports and exports
-* Multi-admin support
-
----
-
-## 📜 License
-
-This project is created for internal business usage.
-You may modify and extend it according to your needs.
+Refer to the `docs` folder for detailed design and workflow information:
+- [System Design](./docs/system-design.md)
+- [Database Design](./docs/database-design.md)
+- [Workflow](./docs/workflow.md)
