@@ -179,6 +179,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -205,8 +209,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Admin {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n}\n\nmodel Customer {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name      String\n  phone     String   @unique\n  address   String?\n  isActive  Boolean  @default(true)\n  createdAt DateTime @default(now())\n  loans     Loan[]\n}\n\nmodel Loan {\n  id                String      @id @default(auto()) @map(\"_id\") @db.ObjectId\n  customerId        String      @db.ObjectId\n  customer          Customer    @relation(fields: [customerId], references: [id])\n  loanAmount        Float\n  interest          Float\n  amountGiven       Float\n  totalRepayment    Float\n  weeklyInstallment Float\n  durationWeeks     Int\n  description       String?\n  startDate         DateTime    @default(now())\n  status            LoanStatus  @default(ACTIVE)\n  repayments        Repayment[]\n  createdAt         DateTime    @default(now())\n  updatedAt         DateTime    @updatedAt\n}\n\nmodel Repayment {\n  id         String    @id @default(auto()) @map(\"_id\") @db.ObjectId\n  loanId     String    @db.ObjectId\n  loan       Loan      @relation(fields: [loanId], references: [id])\n  weekNumber Int\n  amount     Float\n  paidAmount Float     @default(0)\n  paid       Boolean   @default(false)\n  paidDate   DateTime?\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n}\n\nenum LoanStatus {\n  ACTIVE\n  COMPLETED\n  OVERDUE\n}\n\nmodel OTPVerification {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  email     String\n  otp       String\n  expiresAt DateTime\n  createdAt DateTime @default(now())\n}\n",
-  "inlineSchemaHash": "4281cd3a41158c514ee334ab3effa82edaba317ca182d2bcb7624f95d193be4e",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n  output        = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Admin {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n}\n\nmodel Customer {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name      String\n  phone     String   @unique\n  address   String?\n  isActive  Boolean  @default(true)\n  createdAt DateTime @default(now())\n  loans     Loan[]\n}\n\nmodel Loan {\n  id                String      @id @default(auto()) @map(\"_id\") @db.ObjectId\n  customerId        String      @db.ObjectId\n  customer          Customer    @relation(fields: [customerId], references: [id])\n  loanAmount        Float\n  interest          Float\n  amountGiven       Float\n  totalRepayment    Float\n  weeklyInstallment Float\n  durationWeeks     Int\n  description       String?\n  startDate         DateTime    @default(now())\n  status            LoanStatus  @default(ACTIVE)\n  repayments        Repayment[]\n  createdAt         DateTime    @default(now())\n  updatedAt         DateTime    @updatedAt\n}\n\nmodel Repayment {\n  id         String    @id @default(auto()) @map(\"_id\") @db.ObjectId\n  loanId     String    @db.ObjectId\n  loan       Loan      @relation(fields: [loanId], references: [id])\n  weekNumber Int\n  amount     Float\n  paidAmount Float     @default(0)\n  paid       Boolean   @default(false)\n  paidDate   DateTime?\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n}\n\nenum LoanStatus {\n  ACTIVE\n  COMPLETED\n  OVERDUE\n}\n\nmodel OTPVerification {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  email     String\n  otp       String\n  expiresAt DateTime\n  createdAt DateTime @default(now())\n}\n",
+  "inlineSchemaHash": "2aefa912375ece74ba91c250ccda7be1d69527cf33e63f53da9061d174449281",
   "copyEngine": true
 }
 
@@ -247,6 +251,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "src/generated/client/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/client/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/client/schema.prisma")
