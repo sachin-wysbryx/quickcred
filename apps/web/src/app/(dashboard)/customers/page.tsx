@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { Table, Button } from "@repo/ui";
 import Link from "next/link";
 import { formatDate } from "@repo/utils";
-import { DeleteCustomerButton } from "@/components/customers/DeleteCustomerButton";
+import { CustomerStatusButton } from "@/components/customers/CustomerStatusButton";
 import { CustomerStatusFilter } from "@/components/customers/CustomerStatusFilter";
 
 interface PageProps {
@@ -57,7 +57,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
                 headers={["Name", "Phone", "Address", "Total Loans", "Active Loans", "Status", "Actions"]}
                 data={customersWithActiveCount}
                 renderRow={(c) => (
-                    <tr className={!c.isActive ? "bg-gray-50 opacity-60 italic" : ""}>
+                    <tr key={c.id} className={`${!c.isActive ? "bg-gray-50 opacity-60 italic" : ""} hover:bg-gray-50/40 transition-colors`}>
                         <td className={`px-6 py-4 font-medium ${c.isActive ? "text-gray-900" : "text-gray-500"}`}>{c.name}</td>
                         <td className="px-6 py-4 text-gray-600">{c.phone}</td>
                         <td className="px-6 py-4 text-gray-600 truncate max-w-xs">{c.address || "-"}</td>
@@ -78,7 +78,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
                                 <Link href={`/customers/${c.id}`}>
                                     <Button variant="secondary" className="text-sm">View Details</Button>
                                 </Link>
-                                <DeleteCustomerButton id={c.id} />
+                                <CustomerStatusButton id={c.id} isActive={c.isActive} />
                             </div>
                         </td>
                     </tr>
@@ -87,3 +87,4 @@ export default async function CustomersPage({ searchParams }: PageProps) {
         </div>
     );
 }
+

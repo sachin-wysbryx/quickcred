@@ -68,7 +68,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
                     const remainingLoanBalance = totalRepayment - totalPaidSoFar;
 
                     return (
-                        <>
+                        <tr key={r.id} className="hover:bg-gray-50/40 transition-colors">
                             <td className="px-6 py-4 font-medium text-gray-900">{r.loan.customer.name}</td>
                             <td className="px-6 py-4 text-xs font-mono text-gray-500">{r.loan.id.slice(-6)}</td>
                             <td className="px-6 py-4 text-gray-600 font-semibold">Week {r.weekNumber}/12</td>
@@ -103,7 +103,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
                                     )}
                                 </div>
                             </td>
-                        </>
+                        </tr>
                     );
                 }}
             />

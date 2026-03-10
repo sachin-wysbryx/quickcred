@@ -33,13 +33,6 @@ export function CustomerStatusFilter() {
             >
                 Inactive
             </button>
-            <button
-                onClick={() => setStatus("all")}
-                className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-all ${currentStatus === "all" ? "bg-white text-indigo-600 shadow-sm" : "text-gray-500 hover:text-gray-700"
-                    }`}
-            >
-                All
-            </button>
         </div>
     );
 }

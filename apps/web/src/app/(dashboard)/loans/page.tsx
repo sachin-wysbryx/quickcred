@@ -35,7 +35,7 @@ export default async function LoansPage() {
                 headers={["Customer", "Given Amount", "Expected Repayment", "Start Date", "Status", "Actions"]}
                 data={loans}
                 renderRow={(loan) => (
-                    <>
+                    <tr key={loan.id} className="hover:bg-gray-50/40 transition-colors">
                         <td className="px-6 py-4 font-medium text-gray-900">{loan.customer.name}</td>
                         <td className="px-6 py-4 text-gray-900 font-semibold">{formatCurrency(loan.loanAmount)}</td>
                         <td className="px-6 py-4 text-gray-600 font-semibold">{formatCurrency(loan.totalRepayment)}</td>
@@ -46,7 +46,7 @@ export default async function LoansPage() {
                                 View Details &rarr;
                             </Link>
                         </td>
-                    </>
+                    </tr>
                 )}
             />
         </div>

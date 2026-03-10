@@ -20,11 +20,7 @@ export const Table = ({ headers, data, renderRow, className = "" }: {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
-                        {data.map((item, i) => (
-                            <tr key={i} className="hover:bg-gray-50/40 transition-colors">
-                                {renderRow(item, i)}
-                            </tr>
-                        ))}
+                        {data.map((item, i) => renderRow(item, i))}
                         {data.length === 0 && (
                             <tr>
                                 <td colSpan={headers.length} className="px-6 py-12 text-center text-gray-400 font-medium">

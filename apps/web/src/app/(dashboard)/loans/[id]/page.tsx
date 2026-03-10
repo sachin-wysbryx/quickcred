@@ -116,7 +116,7 @@ export default async function LoanDetailsPage({ params }: { params: Promise<{ id
                         : (status === "PARTIAL" ? "text-blue-700 bg-blue-100" : "text-yellow-700 bg-yellow-100");
 
                     return (
-                        <>
+                        <tr key={r.id} className="hover:bg-gray-50/40 transition-colors">
                             <td className="px-6 py-4 font-semibold text-gray-900">Week {r.weekNumber} / {loan.durationWeeks}</td>
                             <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(installment)}</td>
                             <td className="px-6 py-4 text-green-600 font-semibold">{formatCurrency(paid)}</td>
@@ -133,7 +133,7 @@ export default async function LoanDetailsPage({ params }: { params: Promise<{ id
                                     </form>
                                 )}
                             </td>
-                        </>
+                        </tr>
                     );
                 }}
             />

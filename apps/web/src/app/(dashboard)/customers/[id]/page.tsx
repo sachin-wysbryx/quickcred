@@ -95,7 +95,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                     headers={["Loan Description", "Principal", "Start Date", "Status", "Total Repaid", "Action"]}
                     data={loansWithTotals}
                     renderRow={(loan) => (
-                        <>
+                        <tr key={loan.id} className="hover:bg-gray-50/40 transition-colors">
                             <td className="px-6 py-4">
                                 <span className="block font-bold text-gray-900">{loan.description}</span>
                                 <span className="text-[10px] text-gray-400 font-medium">#{loan.id.slice(-6)}</span>
@@ -117,7 +117,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                                     View Details &rarr;
                                 </Link>
                             </td>
-                        </>
+                        </tr>
                     )}
                 />
             ) : (

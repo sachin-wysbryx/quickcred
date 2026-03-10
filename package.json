@@ -9,7 +9,8 @@
     "start": "pnpm --filter web start",
     "lint": "pnpm --filter web lint",
     "db:generate": "pnpm --filter @repo/db exec prisma generate",
-    "db:push": "pnpm --filter @repo/db exec prisma db push"
+    "db:push": "pnpm --filter @repo/db exec prisma db push",
+    "reset:data": "npx --yes tsx scripts/resetDatabase.ts"
   },
   "keywords": [],
   "author": "",

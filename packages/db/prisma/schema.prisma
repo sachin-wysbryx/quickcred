@@ -35,7 +35,7 @@ model Loan {
   totalRepayment    Float
   weeklyInstallment Float
   durationWeeks     Int
-  description       String
+  description       String?
   startDate         DateTime     @default(now())
   status            LoanStatus   @default(ACTIVE)
   repayments        Repayment[]

@@ -3442,7 +3442,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description: string | null
     startDate: Date
     status: $Enums.LoanStatus
     createdAt: Date
@@ -3527,7 +3527,7 @@ export namespace Prisma {
       totalRepayment: number
       weeklyInstallment: number
       durationWeeks: number
-      description: string
+      description: string | null
       startDate: Date
       status: $Enums.LoanStatus
       createdAt: Date
@@ -6639,7 +6639,7 @@ export namespace Prisma {
     totalRepayment?: FloatFilter<"Loan"> | number
     weeklyInstallment?: FloatFilter<"Loan"> | number
     durationWeeks?: IntFilter<"Loan"> | number
-    description?: StringFilter<"Loan"> | string
+    description?: StringNullableFilter<"Loan"> | string | null
     startDate?: DateTimeFilter<"Loan"> | Date | string
     status?: EnumLoanStatusFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeFilter<"Loan"> | Date | string
@@ -6678,7 +6678,7 @@ export namespace Prisma {
     totalRepayment?: FloatFilter<"Loan"> | number
     weeklyInstallment?: FloatFilter<"Loan"> | number
     durationWeeks?: IntFilter<"Loan"> | number
-    description?: StringFilter<"Loan"> | string
+    description?: StringNullableFilter<"Loan"> | string | null
     startDate?: DateTimeFilter<"Loan"> | Date | string
     status?: EnumLoanStatusFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeFilter<"Loan"> | Date | string
@@ -6720,7 +6720,7 @@ export namespace Prisma {
     totalRepayment?: FloatWithAggregatesFilter<"Loan"> | number
     weeklyInstallment?: FloatWithAggregatesFilter<"Loan"> | number
     durationWeeks?: IntWithAggregatesFilter<"Loan"> | number
-    description?: StringWithAggregatesFilter<"Loan"> | string
+    description?: StringNullableWithAggregatesFilter<"Loan"> | string | null
     startDate?: DateTimeWithAggregatesFilter<"Loan"> | Date | string
     status?: EnumLoanStatusWithAggregatesFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeWithAggregatesFilter<"Loan"> | Date | string
@@ -6972,7 +6972,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -6990,7 +6990,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -7005,7 +7005,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7022,7 +7022,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7039,7 +7039,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -7053,7 +7053,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7068,7 +7068,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8000,7 +8000,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8016,7 +8016,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8061,7 +8061,7 @@ export namespace Prisma {
     totalRepayment?: FloatFilter<"Loan"> | number
     weeklyInstallment?: FloatFilter<"Loan"> | number
     durationWeeks?: IntFilter<"Loan"> | number
-    description?: StringFilter<"Loan"> | string
+    description?: StringNullableFilter<"Loan"> | string | null
     startDate?: DateTimeFilter<"Loan"> | Date | string
     status?: EnumLoanStatusFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeFilter<"Loan"> | Date | string
@@ -8188,7 +8188,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8205,7 +8205,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8235,7 +8235,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8251,7 +8251,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8266,7 +8266,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
-    description: string
+    description?: string | null
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8280,7 +8280,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8295,7 +8295,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8310,7 +8310,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

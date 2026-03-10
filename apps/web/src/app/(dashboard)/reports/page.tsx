@@ -56,13 +56,13 @@ export default async function ReportsPage() {
                 headers={["Customer Name", "Phone Number", "Loan Amount", "Total Repaid", "Profit Earned"]}
                 data={reportData}
                 renderRow={(row) => (
-                    <>
+                    <tr key={row.id} className="hover:bg-gray-50/40 transition-colors">
                         <td className="px-6 py-4 font-medium text-gray-900">{row.customerName}</td>
                         <td className="px-6 py-4 text-gray-600">{row.phone}</td>
                         <td className="px-6 py-4 text-gray-600 font-semibold">{formatCurrency(row.loanAmount)}</td>
                         <td className="px-6 py-4 text-green-600 font-semibold">{formatCurrency(row.totalRepaid)}</td>
                         <td className="px-6 py-4 text-blue-600 font-bold">{formatCurrency(row.profit)}</td>
-                    </>
+                    </tr>
                 )}
             />
         </div>
