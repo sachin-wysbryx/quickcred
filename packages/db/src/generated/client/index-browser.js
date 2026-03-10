@@ -122,6 +122,7 @@ exports.Prisma.CustomerScalarFieldEnum = {
   name: 'name',
   phone: 'phone',
   address: 'address',
+  isActive: 'isActive',
   createdAt: 'createdAt'
 };
 
@@ -134,6 +135,7 @@ exports.Prisma.LoanScalarFieldEnum = {
   totalRepayment: 'totalRepayment',
   weeklyInstallment: 'weeklyInstallment',
   durationWeeks: 'durationWeeks',
+  description: 'description',
   startDate: 'startDate',
   status: 'status',
   createdAt: 'createdAt',
@@ -145,6 +147,7 @@ exports.Prisma.RepaymentScalarFieldEnum = {
   loanId: 'loanId',
   weekNumber: 'weekNumber',
   amount: 'amount',
+  paidAmount: 'paidAmount',
   paid: 'paid',
   paidDate: 'paidDate',
   createdAt: 'createdAt',

@@ -1,7 +1,8 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { generateOTP, sendOtpEmail } from "@repo/utils";
+import { generateOTP } from "@repo/utils";
+import { sendOtpEmail } from "@repo/utils/src/email/send-otp";
 
 const ALLOWED_ADMIN_EMAIL = "sachinrv19@gmail.com";
 

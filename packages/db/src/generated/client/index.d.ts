@@ -2199,6 +2199,7 @@ export namespace Prisma {
     name: string | null
     phone: string | null
     address: string | null
+    isActive: boolean | null
     createdAt: Date | null
   }
 
@@ -2207,6 +2208,7 @@ export namespace Prisma {
     name: string | null
     phone: string | null
     address: string | null
+    isActive: boolean | null
     createdAt: Date | null
   }
 
@@ -2215,6 +2217,7 @@ export namespace Prisma {
     name: number
     phone: number
     address: number
+    isActive: number
     createdAt: number
     _all: number
   }
@@ -2225,6 +2228,7 @@ export namespace Prisma {
     name?: true
     phone?: true
     address?: true
+    isActive?: true
     createdAt?: true
   }
 
@@ -2233,6 +2237,7 @@ export namespace Prisma {
     name?: true
     phone?: true
     address?: true
+    isActive?: true
     createdAt?: true
   }
 
@@ -2241,6 +2246,7 @@ export namespace Prisma {
     name?: true
     phone?: true
     address?: true
+    isActive?: true
     createdAt?: true
     _all?: true
   }
@@ -2322,6 +2328,7 @@ export namespace Prisma {
     name: string
     phone: string
     address: string | null
+    isActive: boolean
     createdAt: Date
     _count: CustomerCountAggregateOutputType | null
     _min: CustomerMinAggregateOutputType | null
@@ -2347,6 +2354,7 @@ export namespace Prisma {
     name?: boolean
     phone?: boolean
     address?: boolean
+    isActive?: boolean
     createdAt?: boolean
     loans?: boolean | Customer$loansArgs<ExtArgs>
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
@@ -2359,10 +2367,11 @@ export namespace Prisma {
     name?: boolean
     phone?: boolean
     address?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }
 
-  export type CustomerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "address" | "createdAt", ExtArgs["result"]["customer"]>
+  export type CustomerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "address" | "isActive" | "createdAt", ExtArgs["result"]["customer"]>
   export type CustomerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     loans?: boolean | Customer$loansArgs<ExtArgs>
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
@@ -2378,6 +2387,7 @@ export namespace Prisma {
       name: string
       phone: string
       address: string | null
+      isActive: boolean
       createdAt: Date
     }, ExtArgs["result"]["customer"]>
     composites: {}
@@ -2776,6 +2786,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Customer", 'String'>
     readonly phone: FieldRef<"Customer", 'String'>
     readonly address: FieldRef<"Customer", 'String'>
+    readonly isActive: FieldRef<"Customer", 'Boolean'>
     readonly createdAt: FieldRef<"Customer", 'DateTime'>
   }
     
@@ -3228,6 +3239,7 @@ export namespace Prisma {
     totalRepayment: number | null
     weeklyInstallment: number | null
     durationWeeks: number | null
+    description: string | null
     startDate: Date | null
     status: $Enums.LoanStatus | null
     createdAt: Date | null
@@ -3243,6 +3255,7 @@ export namespace Prisma {
     totalRepayment: number | null
     weeklyInstallment: number | null
     durationWeeks: number | null
+    description: string | null
     startDate: Date | null
     status: $Enums.LoanStatus | null
     createdAt: Date | null
@@ -3258,6 +3271,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: number
     startDate: number
     status: number
     createdAt: number
@@ -3293,6 +3307,7 @@ export namespace Prisma {
     totalRepayment?: true
     weeklyInstallment?: true
     durationWeeks?: true
+    description?: true
     startDate?: true
     status?: true
     createdAt?: true
@@ -3308,6 +3323,7 @@ export namespace Prisma {
     totalRepayment?: true
     weeklyInstallment?: true
     durationWeeks?: true
+    description?: true
     startDate?: true
     status?: true
     createdAt?: true
@@ -3323,6 +3339,7 @@ export namespace Prisma {
     totalRepayment?: true
     weeklyInstallment?: true
     durationWeeks?: true
+    description?: true
     startDate?: true
     status?: true
     createdAt?: true
@@ -3425,6 +3442,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate: Date
     status: $Enums.LoanStatus
     createdAt: Date
@@ -3459,6 +3477,7 @@ export namespace Prisma {
     totalRepayment?: boolean
     weeklyInstallment?: boolean
     durationWeeks?: boolean
+    description?: boolean
     startDate?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3479,13 +3498,14 @@ export namespace Prisma {
     totalRepayment?: boolean
     weeklyInstallment?: boolean
     durationWeeks?: boolean
+    description?: boolean
     startDate?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type LoanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerId" | "loanAmount" | "interest" | "amountGiven" | "totalRepayment" | "weeklyInstallment" | "durationWeeks" | "startDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["loan"]>
+  export type LoanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerId" | "loanAmount" | "interest" | "amountGiven" | "totalRepayment" | "weeklyInstallment" | "durationWeeks" | "description" | "startDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["loan"]>
   export type LoanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
     repayments?: boolean | Loan$repaymentsArgs<ExtArgs>
@@ -3507,6 +3527,7 @@ export namespace Prisma {
       totalRepayment: number
       weeklyInstallment: number
       durationWeeks: number
+      description: string
       startDate: Date
       status: $Enums.LoanStatus
       createdAt: Date
@@ -3913,6 +3934,7 @@ export namespace Prisma {
     readonly totalRepayment: FieldRef<"Loan", 'Float'>
     readonly weeklyInstallment: FieldRef<"Loan", 'Float'>
     readonly durationWeeks: FieldRef<"Loan", 'Int'>
+    readonly description: FieldRef<"Loan", 'String'>
     readonly startDate: FieldRef<"Loan", 'DateTime'>
     readonly status: FieldRef<"Loan", 'LoanStatus'>
     readonly createdAt: FieldRef<"Loan", 'DateTime'>
@@ -4344,11 +4366,13 @@ export namespace Prisma {
   export type RepaymentAvgAggregateOutputType = {
     weekNumber: number | null
     amount: number | null
+    paidAmount: number | null
   }
 
   export type RepaymentSumAggregateOutputType = {
     weekNumber: number | null
     amount: number | null
+    paidAmount: number | null
   }
 
   export type RepaymentMinAggregateOutputType = {
@@ -4356,6 +4380,7 @@ export namespace Prisma {
     loanId: string | null
     weekNumber: number | null
     amount: number | null
+    paidAmount: number | null
     paid: boolean | null
     paidDate: Date | null
     createdAt: Date | null
@@ -4367,6 +4392,7 @@ export namespace Prisma {
     loanId: string | null
     weekNumber: number | null
     amount: number | null
+    paidAmount: number | null
     paid: boolean | null
     paidDate: Date | null
     createdAt: Date | null
@@ -4378,6 +4404,7 @@ export namespace Prisma {
     loanId: number
     weekNumber: number
     amount: number
+    paidAmount: number
     paid: number
     paidDate: number
     createdAt: number
@@ -4389,11 +4416,13 @@ export namespace Prisma {
   export type RepaymentAvgAggregateInputType = {
     weekNumber?: true
     amount?: true
+    paidAmount?: true
   }
 
   export type RepaymentSumAggregateInputType = {
     weekNumber?: true
     amount?: true
+    paidAmount?: true
   }
 
   export type RepaymentMinAggregateInputType = {
@@ -4401,6 +4430,7 @@ export namespace Prisma {
     loanId?: true
     weekNumber?: true
     amount?: true
+    paidAmount?: true
     paid?: true
     paidDate?: true
     createdAt?: true
@@ -4412,6 +4442,7 @@ export namespace Prisma {
     loanId?: true
     weekNumber?: true
     amount?: true
+    paidAmount?: true
     paid?: true
     paidDate?: true
     createdAt?: true
@@ -4423,6 +4454,7 @@ export namespace Prisma {
     loanId?: true
     weekNumber?: true
     amount?: true
+    paidAmount?: true
     paid?: true
     paidDate?: true
     createdAt?: true
@@ -4521,6 +4553,7 @@ export namespace Prisma {
     loanId: string
     weekNumber: number
     amount: number
+    paidAmount: number
     paid: boolean
     paidDate: Date | null
     createdAt: Date
@@ -4551,6 +4584,7 @@ export namespace Prisma {
     loanId?: boolean
     weekNumber?: boolean
     amount?: boolean
+    paidAmount?: boolean
     paid?: boolean
     paidDate?: boolean
     createdAt?: boolean
@@ -4565,13 +4599,14 @@ export namespace Prisma {
     loanId?: boolean
     weekNumber?: boolean
     amount?: boolean
+    paidAmount?: boolean
     paid?: boolean
     paidDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RepaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loanId" | "weekNumber" | "amount" | "paid" | "paidDate" | "createdAt" | "updatedAt", ExtArgs["result"]["repayment"]>
+  export type RepaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loanId" | "weekNumber" | "amount" | "paidAmount" | "paid" | "paidDate" | "createdAt" | "updatedAt", ExtArgs["result"]["repayment"]>
   export type RepaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     loan?: boolean | LoanDefaultArgs<ExtArgs>
   }
@@ -4586,6 +4621,7 @@ export namespace Prisma {
       loanId: string
       weekNumber: number
       amount: number
+      paidAmount: number
       paid: boolean
       paidDate: Date | null
       createdAt: Date
@@ -4987,6 +5023,7 @@ export namespace Prisma {
     readonly loanId: FieldRef<"Repayment", 'String'>
     readonly weekNumber: FieldRef<"Repayment", 'Int'>
     readonly amount: FieldRef<"Repayment", 'Float'>
+    readonly paidAmount: FieldRef<"Repayment", 'Float'>
     readonly paid: FieldRef<"Repayment", 'Boolean'>
     readonly paidDate: FieldRef<"Repayment", 'DateTime'>
     readonly createdAt: FieldRef<"Repayment", 'DateTime'>
@@ -6330,6 +6367,7 @@ export namespace Prisma {
     name: 'name',
     phone: 'phone',
     address: 'address',
+    isActive: 'isActive',
     createdAt: 'createdAt'
   };
 
@@ -6345,6 +6383,7 @@ export namespace Prisma {
     totalRepayment: 'totalRepayment',
     weeklyInstallment: 'weeklyInstallment',
     durationWeeks: 'durationWeeks',
+    description: 'description',
     startDate: 'startDate',
     status: 'status',
     createdAt: 'createdAt',
@@ -6359,6 +6398,7 @@ export namespace Prisma {
     loanId: 'loanId',
     weekNumber: 'weekNumber',
     amount: 'amount',
+    paidAmount: 'paidAmount',
     paid: 'paid',
     paidDate: 'paidDate',
     createdAt: 'createdAt',
@@ -6429,6 +6469,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -6467,13 +6514,6 @@ export namespace Prisma {
    * Reference to a field of type 'LoanStatus[]'
    */
   export type ListEnumLoanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
   /**
    * Deep Input Types
@@ -6535,6 +6575,7 @@ export namespace Prisma {
     name?: StringFilter<"Customer"> | string
     phone?: StringFilter<"Customer"> | string
     address?: StringNullableFilter<"Customer"> | string | null
+    isActive?: BoolFilter<"Customer"> | boolean
     createdAt?: DateTimeFilter<"Customer"> | Date | string
     loans?: LoanListRelationFilter
   }
@@ -6544,6 +6585,7 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     address?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     loans?: LoanOrderByRelationAggregateInput
   }
@@ -6556,6 +6598,7 @@ export namespace Prisma {
     NOT?: CustomerWhereInput | CustomerWhereInput[]
     name?: StringFilter<"Customer"> | string
     address?: StringNullableFilter<"Customer"> | string | null
+    isActive?: BoolFilter<"Customer"> | boolean
     createdAt?: DateTimeFilter<"Customer"> | Date | string
     loans?: LoanListRelationFilter
   }, "id" | "phone">
@@ -6565,6 +6608,7 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     address?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     _count?: CustomerCountOrderByAggregateInput
     _max?: CustomerMaxOrderByAggregateInput
@@ -6579,6 +6623,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Customer"> | string
     phone?: StringWithAggregatesFilter<"Customer"> | string
     address?: StringNullableWithAggregatesFilter<"Customer"> | string | null
+    isActive?: BoolWithAggregatesFilter<"Customer"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Customer"> | Date | string
   }
 
@@ -6594,6 +6639,7 @@ export namespace Prisma {
     totalRepayment?: FloatFilter<"Loan"> | number
     weeklyInstallment?: FloatFilter<"Loan"> | number
     durationWeeks?: IntFilter<"Loan"> | number
+    description?: StringFilter<"Loan"> | string
     startDate?: DateTimeFilter<"Loan"> | Date | string
     status?: EnumLoanStatusFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeFilter<"Loan"> | Date | string
@@ -6611,6 +6657,7 @@ export namespace Prisma {
     totalRepayment?: SortOrder
     weeklyInstallment?: SortOrder
     durationWeeks?: SortOrder
+    description?: SortOrder
     startDate?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -6631,6 +6678,7 @@ export namespace Prisma {
     totalRepayment?: FloatFilter<"Loan"> | number
     weeklyInstallment?: FloatFilter<"Loan"> | number
     durationWeeks?: IntFilter<"Loan"> | number
+    description?: StringFilter<"Loan"> | string
     startDate?: DateTimeFilter<"Loan"> | Date | string
     status?: EnumLoanStatusFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeFilter<"Loan"> | Date | string
@@ -6648,6 +6696,7 @@ export namespace Prisma {
     totalRepayment?: SortOrder
     weeklyInstallment?: SortOrder
     durationWeeks?: SortOrder
+    description?: SortOrder
     startDate?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -6671,6 +6720,7 @@ export namespace Prisma {
     totalRepayment?: FloatWithAggregatesFilter<"Loan"> | number
     weeklyInstallment?: FloatWithAggregatesFilter<"Loan"> | number
     durationWeeks?: IntWithAggregatesFilter<"Loan"> | number
+    description?: StringWithAggregatesFilter<"Loan"> | string
     startDate?: DateTimeWithAggregatesFilter<"Loan"> | Date | string
     status?: EnumLoanStatusWithAggregatesFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeWithAggregatesFilter<"Loan"> | Date | string
@@ -6685,6 +6735,7 @@ export namespace Prisma {
     loanId?: StringFilter<"Repayment"> | string
     weekNumber?: IntFilter<"Repayment"> | number
     amount?: FloatFilter<"Repayment"> | number
+    paidAmount?: FloatFilter<"Repayment"> | number
     paid?: BoolFilter<"Repayment"> | boolean
     paidDate?: DateTimeNullableFilter<"Repayment"> | Date | string | null
     createdAt?: DateTimeFilter<"Repayment"> | Date | string
@@ -6697,6 +6748,7 @@ export namespace Prisma {
     loanId?: SortOrder
     weekNumber?: SortOrder
     amount?: SortOrder
+    paidAmount?: SortOrder
     paid?: SortOrder
     paidDate?: SortOrder
     createdAt?: SortOrder
@@ -6712,6 +6764,7 @@ export namespace Prisma {
     loanId?: StringFilter<"Repayment"> | string
     weekNumber?: IntFilter<"Repayment"> | number
     amount?: FloatFilter<"Repayment"> | number
+    paidAmount?: FloatFilter<"Repayment"> | number
     paid?: BoolFilter<"Repayment"> | boolean
     paidDate?: DateTimeNullableFilter<"Repayment"> | Date | string | null
     createdAt?: DateTimeFilter<"Repayment"> | Date | string
@@ -6724,6 +6777,7 @@ export namespace Prisma {
     loanId?: SortOrder
     weekNumber?: SortOrder
     amount?: SortOrder
+    paidAmount?: SortOrder
     paid?: SortOrder
     paidDate?: SortOrder
     createdAt?: SortOrder
@@ -6743,6 +6797,7 @@ export namespace Prisma {
     loanId?: StringWithAggregatesFilter<"Repayment"> | string
     weekNumber?: IntWithAggregatesFilter<"Repayment"> | number
     amount?: FloatWithAggregatesFilter<"Repayment"> | number
+    paidAmount?: FloatWithAggregatesFilter<"Repayment"> | number
     paid?: BoolWithAggregatesFilter<"Repayment"> | boolean
     paidDate?: DateTimeNullableWithAggregatesFilter<"Repayment"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Repayment"> | Date | string
@@ -6851,6 +6906,7 @@ export namespace Prisma {
     name: string
     phone: string
     address?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     loans?: LoanCreateNestedManyWithoutCustomerInput
   }
@@ -6860,6 +6916,7 @@ export namespace Prisma {
     name: string
     phone: string
     address?: string | null
+    isActive?: boolean
     createdAt?: Date | string
     loans?: LoanUncheckedCreateNestedManyWithoutCustomerInput
   }
@@ -6868,6 +6925,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loans?: LoanUpdateManyWithoutCustomerNestedInput
   }
@@ -6876,6 +6934,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loans?: LoanUncheckedUpdateManyWithoutCustomerNestedInput
   }
@@ -6885,6 +6944,7 @@ export namespace Prisma {
     name: string
     phone: string
     address?: string | null
+    isActive?: boolean
     createdAt?: Date | string
   }
 
@@ -6892,6 +6952,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6899,6 +6960,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6910,6 +6972,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -6927,6 +6990,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -6941,6 +7005,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6957,6 +7022,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6973,6 +7039,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -6986,6 +7053,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7000,6 +7068,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7010,6 +7079,7 @@ export namespace Prisma {
     id?: string
     weekNumber: number
     amount: number
+    paidAmount?: number
     paid?: boolean
     paidDate?: Date | string | null
     createdAt?: Date | string
@@ -7022,6 +7092,7 @@ export namespace Prisma {
     loanId: string
     weekNumber: number
     amount: number
+    paidAmount?: number
     paid?: boolean
     paidDate?: Date | string | null
     createdAt?: Date | string
@@ -7031,6 +7102,7 @@ export namespace Prisma {
   export type RepaymentUpdateInput = {
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7042,6 +7114,7 @@ export namespace Prisma {
     loanId?: StringFieldUpdateOperationsInput | string
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7053,6 +7126,7 @@ export namespace Prisma {
     loanId: string
     weekNumber: number
     amount: number
+    paidAmount?: number
     paid?: boolean
     paidDate?: Date | string | null
     createdAt?: Date | string
@@ -7062,6 +7136,7 @@ export namespace Prisma {
   export type RepaymentUpdateManyMutationInput = {
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7072,6 +7147,7 @@ export namespace Prisma {
     loanId?: StringFieldUpdateOperationsInput | string
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7225,6 +7301,11 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type LoanListRelationFilter = {
     every?: LoanWhereInput
     some?: LoanWhereInput
@@ -7240,6 +7321,7 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     address?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7248,6 +7330,7 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     address?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7256,6 +7339,7 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     address?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7276,6 +7360,14 @@ export namespace Prisma {
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
     isSet?: boolean
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -7331,6 +7423,7 @@ export namespace Prisma {
     totalRepayment?: SortOrder
     weeklyInstallment?: SortOrder
     durationWeeks?: SortOrder
+    description?: SortOrder
     startDate?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -7355,6 +7448,7 @@ export namespace Prisma {
     totalRepayment?: SortOrder
     weeklyInstallment?: SortOrder
     durationWeeks?: SortOrder
+    description?: SortOrder
     startDate?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -7370,6 +7464,7 @@ export namespace Prisma {
     totalRepayment?: SortOrder
     weeklyInstallment?: SortOrder
     durationWeeks?: SortOrder
+    description?: SortOrder
     startDate?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -7427,11 +7522,6 @@ export namespace Prisma {
     _max?: NestedEnumLoanStatusFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -7454,6 +7544,7 @@ export namespace Prisma {
     loanId?: SortOrder
     weekNumber?: SortOrder
     amount?: SortOrder
+    paidAmount?: SortOrder
     paid?: SortOrder
     paidDate?: SortOrder
     createdAt?: SortOrder
@@ -7463,6 +7554,7 @@ export namespace Prisma {
   export type RepaymentAvgOrderByAggregateInput = {
     weekNumber?: SortOrder
     amount?: SortOrder
+    paidAmount?: SortOrder
   }
 
   export type RepaymentMaxOrderByAggregateInput = {
@@ -7470,6 +7562,7 @@ export namespace Prisma {
     loanId?: SortOrder
     weekNumber?: SortOrder
     amount?: SortOrder
+    paidAmount?: SortOrder
     paid?: SortOrder
     paidDate?: SortOrder
     createdAt?: SortOrder
@@ -7481,6 +7574,7 @@ export namespace Prisma {
     loanId?: SortOrder
     weekNumber?: SortOrder
     amount?: SortOrder
+    paidAmount?: SortOrder
     paid?: SortOrder
     paidDate?: SortOrder
     createdAt?: SortOrder
@@ -7490,14 +7584,7 @@ export namespace Prisma {
   export type RepaymentSumOrderByAggregateInput = {
     weekNumber?: SortOrder
     amount?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    paidAmount?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -7564,6 +7651,10 @@ export namespace Prisma {
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
     unset?: boolean
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type LoanUpdateManyWithoutCustomerNestedInput = {
@@ -7676,10 +7767,6 @@ export namespace Prisma {
     connect?: LoanWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
     unset?: boolean
@@ -7775,6 +7862,11 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -7803,6 +7895,14 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
     isSet?: boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -7865,11 +7965,6 @@ export namespace Prisma {
     _max?: NestedEnumLoanStatusFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -7880,14 +7975,6 @@ export namespace Prisma {
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
     isSet?: boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -7913,6 +8000,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -7928,6 +8016,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -7972,6 +8061,7 @@ export namespace Prisma {
     totalRepayment?: FloatFilter<"Loan"> | number
     weeklyInstallment?: FloatFilter<"Loan"> | number
     durationWeeks?: IntFilter<"Loan"> | number
+    description?: StringFilter<"Loan"> | string
     startDate?: DateTimeFilter<"Loan"> | Date | string
     status?: EnumLoanStatusFilter<"Loan"> | $Enums.LoanStatus
     createdAt?: DateTimeFilter<"Loan"> | Date | string
@@ -7983,6 +8073,7 @@ export namespace Prisma {
     name: string
     phone: string
     address?: string | null
+    isActive?: boolean
     createdAt?: Date | string
   }
 
@@ -7991,6 +8082,7 @@ export namespace Prisma {
     name: string
     phone: string
     address?: string | null
+    isActive?: boolean
     createdAt?: Date | string
   }
 
@@ -8003,6 +8095,7 @@ export namespace Prisma {
     id?: string
     weekNumber: number
     amount: number
+    paidAmount?: number
     paid?: boolean
     paidDate?: Date | string | null
     createdAt?: Date | string
@@ -8013,6 +8106,7 @@ export namespace Prisma {
     id?: string
     weekNumber: number
     amount: number
+    paidAmount?: number
     paid?: boolean
     paidDate?: Date | string | null
     createdAt?: Date | string
@@ -8043,6 +8137,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -8050,6 +8145,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -8077,6 +8173,7 @@ export namespace Prisma {
     loanId?: StringFilter<"Repayment"> | string
     weekNumber?: IntFilter<"Repayment"> | number
     amount?: FloatFilter<"Repayment"> | number
+    paidAmount?: FloatFilter<"Repayment"> | number
     paid?: BoolFilter<"Repayment"> | boolean
     paidDate?: DateTimeNullableFilter<"Repayment"> | Date | string | null
     createdAt?: DateTimeFilter<"Repayment"> | Date | string
@@ -8091,6 +8188,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8107,6 +8205,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8136,6 +8235,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8151,6 +8251,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8165,6 +8266,7 @@ export namespace Prisma {
     totalRepayment: number
     weeklyInstallment: number
     durationWeeks: number
+    description: string
     startDate?: Date | string
     status?: $Enums.LoanStatus
     createdAt?: Date | string
@@ -8178,6 +8280,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8192,6 +8295,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8206,6 +8310,7 @@ export namespace Prisma {
     totalRepayment?: FloatFieldUpdateOperationsInput | number
     weeklyInstallment?: FloatFieldUpdateOperationsInput | number
     durationWeeks?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8216,6 +8321,7 @@ export namespace Prisma {
     id?: string
     weekNumber: number
     amount: number
+    paidAmount?: number
     paid?: boolean
     paidDate?: Date | string | null
     createdAt?: Date | string
@@ -8225,6 +8331,7 @@ export namespace Prisma {
   export type RepaymentUpdateWithoutLoanInput = {
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8234,6 +8341,7 @@ export namespace Prisma {
   export type RepaymentUncheckedUpdateWithoutLoanInput = {
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8243,6 +8351,7 @@ export namespace Prisma {
   export type RepaymentUncheckedUpdateManyWithoutLoanInput = {
     weekNumber?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    paidAmount?: FloatFieldUpdateOperationsInput | number
     paid?: BoolFieldUpdateOperationsInput | boolean
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -12,7 +12,7 @@ export default function DashboardLayout({
         { name: "Customers", href: "/customers", icon: "👥" },
         { name: "Loans", href: "/loans", icon: "💰" },
         { name: "Repayments", href: "/repayments", icon: "📅" },
-        { name: "Reports", href: "/dashboard", icon: "📈" }, // Linking to dashboard for now
+        { name: "Reports", href: "/reports", icon: "📈" },
     ];
 
     return (

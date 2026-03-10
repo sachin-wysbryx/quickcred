@@ -9,9 +9,19 @@ export async function createLoan(formData: FormData) {
     const loanAmount = parseFloat(formData.get("loanAmount") as string);
     const interestRate = parseFloat(formData.get("interest") as string);
     const startDate = new Date(formData.get("startDate") as string);
+    let description = formData.get("description") as string;
 
     if (!customerId || isNaN(loanAmount) || isNaN(interestRate) || !startDate) {
         throw new Error("Invalid loan data");
+    }
+
+    // Feature 3: Loan Description
+    const loanCount = await db.loan.count({
+        where: { customerId }
+    });
+
+    if (!description || description.trim() === "") {
+        description = `Loan ${loanCount + 1}`;
     }
 
     const durationWeeks = 12;
@@ -19,6 +29,12 @@ export async function createLoan(formData: FormData) {
     const amountGiven = loanAmount;
     const totalRepayment = loanAmount + interest;
     const weeklyInstallment = totalRepayment / durationWeeks;
+
+    // Feature 6: Customer Reactivation
+    await db.customer.update({
+        where: { id: customerId },
+        data: { isActive: true }
+    });
 
     const loan = await db.loan.create({
         data: {
@@ -29,6 +45,7 @@ export async function createLoan(formData: FormData) {
             totalRepayment,
             weeklyInstallment,
             durationWeeks,
+            description,
             startDate,
             status: "ACTIVE",
         },

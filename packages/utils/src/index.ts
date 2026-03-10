@@ -1,8 +1,5 @@
 export const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-    }).format(amount);
+    return `₹${Number(amount ?? 0).toFixed(2)}`;
 };
 
 export const formatDate = (date: Date | string) => {
@@ -26,6 +23,7 @@ export const generateRepaymentSchedule = (loanId: string, totalRepayment: number
             loanId,
             weekNumber: i,
             amount: weeklyAmount,
+            paidAmount: 0,
             paid: false,
         });
     }
@@ -34,4 +32,10 @@ export const generateRepaymentSchedule = (loanId: string, totalRepayment: number
     return repayments;
 };
 
-export * from "./email/send-otp";
+export function generateOTP(): string {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// export * from "./email/send-otp"; - Removed to prevent build errors in client components due to nodemailer
+export * from "./loan/applyCustomPayment";
+export * from "./currency";

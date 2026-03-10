@@ -3,13 +3,11 @@ import { Card, Table } from "@repo/ui";
 import { formatCurrency, formatDate } from "@repo/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { markRepaymentPaid } from "@/lib/actions/repayment";
+import { markRepaymentPaid } from "@/lib/actions/repayments/markPaid";
 import { Button } from "@repo/ui";
 
-export default async function LoanDetailsPage({ params }: { params: { id: string } }) {
-    // Note: in Next.js 15, params might need to be awaited if they are promises, but this is 14/15 depending on config. Let's assume standard app router object for now, or just use it directly. We'll await params just in case it's a promise in the latest Next.js versions.
-    const resolvedParams = await Promise.resolve(params);
-    const loanId = resolvedParams.id;
+export default async function LoanDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id: loanId } = await params;
 
     const loan = await db.loan.findUnique({
         where: { id: loanId },
@@ -26,6 +24,9 @@ export default async function LoanDetailsPage({ params }: { params: { id: string
     }
 
     const { customer, repayments } = loan;
+
+    const totalPaid = repayments.reduce((sum, r) => sum + Number(r.paidAmount ?? 0), 0);
+    const remainingBalance = loan.totalRepayment - totalPaid;
 
     return (
         <div className="max-w-5xl mx-auto">
@@ -62,60 +63,79 @@ export default async function LoanDetailsPage({ params }: { params: { id: string
                 </Card>
 
                 <Card title="Loan Summary" icon={() => <span>💰</span>}>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                         <div>
-                            <span className="block text-sm text-gray-500 font-medium">Principal</span>
-                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.amountGiven)}</span>
+                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider">Principal</span>
+                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.loanAmount)}</span>
                         </div>
                         <div>
-                            <span className="block text-sm text-gray-500 font-medium">Interest</span>
-                            <span className="block text-lg text-gray-800">{formatCurrency(loan.interest)}</span>
+                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider">Interest</span>
+                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.interest)}</span>
                         </div>
                         <div>
-                            <span className="block text-sm text-gray-500 font-medium">Total expected</span>
-                            <span className="block text-xl font-bold text-green-700">{formatCurrency(loan.totalRepayment)}</span>
+                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider text-indigo-500 text-opacity-80">Total Expected</span>
+                            <span className="block text-lg font-bold text-indigo-600">{formatCurrency(loan.totalRepayment)}</span>
                         </div>
                         <div>
-                            <span className="block text-sm text-gray-500 font-medium">Weekly Installment</span>
-                            <span className="block text-lg font-semibold text-gray-900">{formatCurrency(loan.weeklyInstallment)}</span>
+                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider">Weekly Installment</span>
+                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.weeklyInstallment)}</span>
                         </div>
-                        <div>
-                            <span className="block text-sm text-gray-500 font-medium">Start Date</span>
-                            <span className="block text-gray-800">{formatDate(loan.startDate)}</span>
+
+                        <div className="bg-green-50 p-3 rounded-lg border border-green-100 mt-2">
+                            <span className="block text-xs text-green-600 font-bold uppercase tracking-tight">Paid So Far</span>
+                            <span className="block text-xl font-black text-green-700">{formatCurrency(totalPaid)}</span>
                         </div>
+
+                        <div className="bg-red-50 p-3 rounded-lg border border-red-100 mt-2">
+                            <span className="block text-xs text-red-500 font-bold uppercase tracking-tight">Remaining Balance</span>
+                            <span className="block text-xl font-black text-red-700">{formatCurrency(remainingBalance)}</span>
+                        </div>
+                    </div>
+
+                    <div className="mt-6 flex justify-between items-center text-sm border-t border-gray-100 pt-4">
+                        <span className="text-gray-500 font-medium">Agreement Start Date</span>
+                        <span className="font-semibold text-gray-900">{formatDate(loan.startDate)}</span>
                     </div>
                 </Card>
             </div>
 
-            <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-4">Repayment Schedule</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-gray-900 tracking-tight">Repayment Schedule</h2>
+            </div>
             <Table
-                headers={["Week Number", "Amount", "Paid Status", "Paid Date", "Action"]}
+                headers={["Week Number", "Installment", "Paid", "Remaining", "Status", "Action"]}
                 data={repayments}
-                renderRow={(r) => (
-                    <>
-                        <td className="px-6 py-4 font-semibold text-gray-900">Week {r.weekNumber} / {loan.durationWeeks}</td>
-                        <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(r.amount)}</td>
-                        <td className="px-6 py-4">
-                            {r.paid ? (
-                                <span className="text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full text-xs uppercase tracking-wider">
-                                    Paid
+                renderRow={(r) => {
+                    const installment = Number(r.amount ?? 0);
+                    const paid = Number(r.paidAmount ?? 0);
+                    const remaining = installment - paid;
+
+                    const status = paid >= installment ? "PAID" : (paid > 0 ? "PARTIAL" : "PENDING");
+                    const statusColor = status === "PAID"
+                        ? "text-green-700 bg-green-100"
+                        : (status === "PARTIAL" ? "text-blue-700 bg-blue-100" : "text-yellow-700 bg-yellow-100");
+
+                    return (
+                        <>
+                            <td className="px-6 py-4 font-semibold text-gray-900">Week {r.weekNumber} / {loan.durationWeeks}</td>
+                            <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(installment)}</td>
+                            <td className="px-6 py-4 text-green-600 font-semibold">{formatCurrency(paid)}</td>
+                            <td className="px-6 py-4 text-red-600 font-semibold">{formatCurrency(remaining)}</td>
+                            <td className="px-6 py-4">
+                                <span className={`inline-flex items-center text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider ${statusColor}`}>
+                                    {status}
                                 </span>
-                            ) : (
-                                <span className="text-yellow-600 font-bold bg-yellow-50 px-3 py-1 rounded-full text-xs uppercase tracking-wider">
-                                    Pending
-                                </span>
-                            )}
-                        </td>
-                        <td className="px-6 py-4 text-gray-500">{r.paidDate ? formatDate(r.paidDate) : "-"}</td>
-                        <td className="px-6 py-4">
-                            {!r.paid && (
-                                <form action={markRepaymentPaid.bind(null, r.id)}>
-                                    <Button variant="secondary" className="py-1 px-3 text-sm">Mark as Paid</Button>
-                                </form>
-                            )}
-                        </td>
-                    </>
-                )}
+                            </td>
+                            <td className="px-6 py-4">
+                                {!r.paid && (
+                                    <form action={markRepaymentPaid.bind(null, r.id)}>
+                                        <Button variant="secondary" className="py-1 px-3 text-sm">Mark as Paid</Button>
+                                    </form>
+                                )}
+                            </td>
+                        </>
+                    );
+                }}
             />
         </div>
     );

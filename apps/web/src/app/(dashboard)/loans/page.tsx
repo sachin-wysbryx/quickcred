@@ -37,8 +37,8 @@ export default async function LoansPage() {
                 renderRow={(loan) => (
                     <>
                         <td className="px-6 py-4 font-medium text-gray-900">{loan.customer.name}</td>
-                        <td className="px-6 py-4 text-gray-900 font-semibold">{formatCurrency(loan.amountGiven)}</td>
-                        <td className="px-6 py-4 text-gray-600">{formatCurrency(loan.totalRepayment)}</td>
+                        <td className="px-6 py-4 text-gray-900 font-semibold">{formatCurrency(loan.loanAmount)}</td>
+                        <td className="px-6 py-4 text-gray-600 font-semibold">{formatCurrency(loan.totalRepayment)}</td>
                         <td className="px-6 py-4 text-gray-500">{formatDate(loan.startDate)}</td>
                         <td className="px-6 py-4">{getStatusBadge(loan.status)}</td>
                         <td className="px-6 py-4">

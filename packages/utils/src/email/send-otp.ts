@@ -21,7 +21,3 @@ export async function sendOtpEmail(email: string, otp: string) {
 
     await transporter.sendMail(mailOptions);
 }
-
-export function generateOTP(): string {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-}
