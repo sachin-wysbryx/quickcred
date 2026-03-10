@@ -1,45 +1,155 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { logoutAction } from "@/lib/actions/auth/logoutAction";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ProfileDropdown } from "@/components/ProfileDropdown";
+import {
+    LayoutDashboard,
+    Users,
+    CircleDollarSign,
+    CalendarClock,
+    BarChart3,
+    LogOut,
+    Menu,
+    X
+} from "lucide-react";
 
 export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const pathname = usePathname();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     const navItems = [
-        { name: "Dashboard", href: "/dashboard", icon: "📊" },
-        { name: "Customers", href: "/customers", icon: "👥" },
-        { name: "Loans", href: "/loans", icon: "💰" },
-        { name: "Repayments", href: "/repayments", icon: "📅" },
-        { name: "Reports", href: "/reports", icon: "📈" },
+        { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+        { name: "Customers", href: "/customers", icon: Users },
+        { name: "Loans", href: "/loans", icon: CircleDollarSign },
+        { name: "Repayments", href: "/repayments", icon: CalendarClock },
+        { name: "Reports", href: "/reports", icon: BarChart3 },
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col md:flex-row transition-colors duration-300">
+        <div className="min-h-screen bg-background flex flex-col md:flex-row transition-colors duration-300">
             {/* Desktop Sidebar */}
-            <aside className="hidden md:flex w-64 bg-white dark:bg-slate-900 border-r border-gray-100 dark:border-slate-800 flex-col flex-shrink-0 shadow-sm">
-                <div className="h-16 flex items-center px-6 border-b border-gray-100 dark:border-slate-800">
-                    <span className="text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                        QuickCred
+            <aside className="hidden md:flex w-72 bg-card border-r border-border flex-col flex-shrink-0 shadow-premium">
+                <div className="h-20 flex items-center px-8 border-b border-border/50">
+                    <div className="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-indigo-500/20">
+                        <CircleDollarSign className="text-white w-6 h-6" />
+                    </div>
+                    <span className="text-xl font-black text-foreground tracking-tighter">
+                        QuickCred<span className="text-primary font-light"></span>
                     </span>
                 </div>
-                <nav className="p-4 space-y-1 flex-1">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.href}
-                            className="flex items-center space-x-3 px-4 py-3 text-gray-600 dark:text-slate-400 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all font-semibold"
-                        >
-                            <span className="text-lg">{item.icon}</span>
-                            <span>{item.name}</span>
-                        </Link>
-                    ))}
+
+                <nav className="p-6 space-y-2 flex-1 pt-8">
+                    {navItems.map((item) => {
+                        const isActive = pathname.startsWith(item.href);
+                        return (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className={`
+                                    flex items-center space-x-3 px-6 py-4 rounded-2xl transition-all duration-300 group
+                                    ${isActive
+                                        ? "gradient-primary text-white shadow-lg shadow-indigo-500/20"
+                                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                    }
+                                `}
+                            >
+                                <item.icon className={`w-5 h-5 ${isActive ? "text-white" : "group-hover:scale-110 transition-transform"}`} />
+                                <span className="font-bold tracking-tight">{item.name}</span>
+                            </Link>
+                        );
+                    })}
                 </nav>
-                <div className="p-4 border-t border-gray-100 dark:border-slate-800">
+
+                {/* Sidebar Logout */}
+                <div className="p-6 border-t border-border/50">
                     <form action={logoutAction}>
-                        <button type="submit" className="w-full flex items-center space-x-3 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all font-bold text-sm">
-                            <span>🚪</span>
+                        <button
+                            id="sidebar-logout-btn"
+                            type="submit"
+                            className="w-full flex items-center space-x-3 px-6 py-4 text-destructive hover:bg-destructive/10 rounded-2xl transition-all font-bold tracking-tight"
+                        >
+                            <LogOut className="w-5 h-5" />
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </div>
+            </aside>
+
+            {/* Mobile Sidebar Drawer Overlay */}
+            {mobileMenuOpen && (
+                <div
+                    className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                    onClick={() => setMobileMenuOpen(false)}
+                />
+            )}
+
+            {/* Mobile Sidebar Drawer */}
+            <aside
+                className={`
+                    md:hidden fixed top-0 left-0 h-full w-72 bg-card border-r border-border flex flex-col z-50
+                    transform transition-transform duration-300 ease-in-out shadow-2xl
+                    ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+                `}
+            >
+                <div className="h-20 flex items-center justify-between px-6 border-b border-border/50">
+                    <div className="flex items-center">
+                        <div className="w-9 h-9 gradient-purple rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-indigo-500/20">
+                            <CircleDollarSign className="text-white w-5 h-5" />
+                        </div>
+                        <span className="text-lg font-black text-foreground tracking-tighter">
+                            QuickCred<span className="text-primary font-light">Admin</span>
+                        </span>
+                    </div>
+                    <button
+                        id="mobile-sidebar-close-btn"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="p-2 rounded-xl hover:bg-muted transition-colors"
+                        aria-label="Close menu"
+                    >
+                        <X className="w-5 h-5 text-muted-foreground" />
+                    </button>
+                </div>
+
+                <nav className="p-6 space-y-2 flex-1 pt-8">
+                    {navItems.map((item) => {
+                        const isActive = pathname.startsWith(item.href);
+                        return (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`
+                                    flex items-center space-x-3 px-6 py-4 rounded-2xl transition-all duration-300 group
+                                    ${isActive
+                                        ? "gradient-primary text-white shadow-lg shadow-indigo-500/20"
+                                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                    }
+                                `}
+                            >
+                                <item.icon className={`w-5 h-5 ${isActive ? "text-white" : "group-hover:scale-110 transition-transform"}`} />
+                                <span className="font-bold tracking-tight">{item.name}</span>
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                {/* Mobile Sidebar Logout */}
+                <div className="p-6 border-t border-border/50">
+                    <form action={logoutAction}>
+                        <button
+                            id="mobile-sidebar-logout-btn"
+                            type="submit"
+                            className="w-full flex items-center space-x-3 px-6 py-4 text-destructive hover:bg-destructive/10 rounded-2xl transition-all font-bold tracking-tight"
+                        >
+                            <LogOut className="w-5 h-5" />
                             <span>Logout</span>
                         </button>
                     </form>
@@ -47,45 +157,46 @@ export default function DashboardLayout({
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col pb-20 md:pb-0">
-                <header className="h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 dark:border-slate-800 flex items-center px-4 md:px-8 justify-between">
-                    <div className="flex items-center space-x-4">
-                        <span className="md:hidden text-lg font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                            QC
-                        </span>
-                        <h2 className="text-sm md:text-lg font-bold text-gray-800 dark:text-slate-100 uppercase tracking-widest hidden sm:block">Admin Portal</h2>
+            <main className="flex-1 flex flex-col min-h-screen">
+                {/* Top Header */}
+                <header className="h-16 md:h-20 bg-background/80 backdrop-blur-md sticky top-0 z-30 border-b border-border/50 flex items-center px-4 md:px-10 justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                        {/* Mobile Hamburger */}
+                        <button
+                            id="mobile-menu-btn"
+                            className="md:hidden p-2 rounded-xl hover:bg-muted transition-colors border border-border"
+                            onClick={() => setMobileMenuOpen(true)}
+                            aria-label="Open menu"
+                        >
+                            <Menu className="w-5 h-5 text-foreground" />
+                        </button>
+
+                        {/* Mobile Logo */}
+                        <div className="md:hidden w-8 h-8 gradient-purple rounded-lg flex items-center justify-center shadow-lg">
+                            <CircleDollarSign className="text-white w-4 h-4" />
+                        </div>
+
+                        <h2 className="text-sm font-black text-muted-foreground uppercase tracking-widest capitalize">
+                            {pathname.split("/").filter(Boolean).pop() || "System"}
+                        </h2>
                     </div>
 
-                    <div className="flex items-center space-x-2 md:space-x-4">
+                    <div className="flex items-center gap-3 md:gap-4">
                         <ThemeToggle />
-                        <div className="hidden md:flex flex-col items-end">
-                            <span className="text-xs font-black text-gray-400 uppercase tracking-tighter">Administrator</span>
-                            <span className="text-sm font-bold text-gray-700 dark:text-slate-300">sachinrv19@gmail.com</span>
+                        <div className="h-8 w-[1px] bg-border hidden sm:block" />
+                        <div className="hidden sm:flex flex-col items-end">
+                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-tighter">ADMIN</span>
+                            <span className="text-xs font-bold text-foreground">sachinrv19@gmail.com</span>
                         </div>
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-black shadow-lg shadow-indigo-500/20">
-                            A
-                        </div>
+                        <ProfileDropdown email="sachinrv19@gmail.com" />
                     </div>
                 </header>
 
-                <div className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+                {/* Page Content */}
+                <div className="flex-1 p-4 md:p-8 lg:p-10 max-w-7xl mx-auto w-full">
                     {children}
                 </div>
             </main>
-
-            {/* Mobile Bottom Navigation */}
-            <nav className="md:hidden fixed bottom-4 left-4 right-4 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-gray-100 dark:border-slate-800 rounded-2xl flex items-center justify-around px-2 shadow-2xl z-50">
-                {navItems.map((item) => (
-                    <Link
-                        key={item.name}
-                        href={item.href}
-                        className="flex flex-col items-center justify-center w-12 h-12 rounded-xl text-gray-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                        <span className="text-xl">{item.icon}</span>
-                        <span className="text-[10px] font-black uppercase mt-0.5 tracking-tighter">{item.name.slice(0, 4)}</span>
-                    </Link>
-                ))}
-            </nav>
         </div>
     );
 }

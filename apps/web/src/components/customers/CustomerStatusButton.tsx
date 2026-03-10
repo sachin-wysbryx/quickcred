@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { Button } from "@repo/ui";
+import { UserMinus, UserCheck } from "lucide-react";
 import { reactivateCustomer } from "@/lib/actions/customers/reactivateCustomer";
 import { deactivateCustomer } from "@/lib/actions/customers/deactivateCustomer";
 
@@ -24,13 +24,25 @@ export function CustomerStatusButton({ id, isActive }: CustomerStatusButtonProps
     };
 
     return (
-        <Button
-            variant="secondary"
-            className={`text-sm ${isActive ? "text-red-600 hover:bg-red-50" : "text-green-600 hover:bg-green-50"}`}
+        <button
             onClick={handleToggle}
             disabled={isPending}
+            className={`
+                w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-sm
+                ${isActive
+                    ? "bg-destructive/10 text-destructive hover:bg-destructive/20 border border-destructive/20"
+                    : "bg-green-500/10 text-green-600 hover:bg-green-500/20 border border-green-500/20"
+                }
+                ${isPending ? "opacity-60 cursor-not-allowed" : ""}
+            `}
         >
-            {isPending ? "Updating..." : (isActive ? "Deactivate" : "Reactivate")}
-        </Button>
+            {isActive ? (
+                <UserMinus className="w-4 h-4" />
+            ) : (
+                <UserCheck className="w-4 h-4" />
+            )}
+            {isPending ? "Updating..." : (isActive ? "Deactivate Customer" : "Reactivate Customer")}
+        </button>
     );
 }
+

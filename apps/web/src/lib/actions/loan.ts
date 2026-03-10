@@ -4,7 +4,7 @@ import { db } from "../db";
 import { revalidatePath } from "next/cache";
 import { generateRepaymentSchedule } from "@repo/utils";
 
-export async function createLoan(formData: FormData) {
+export async function createLoan(formData: FormData): Promise<string> {
     const customerId = formData.get("customerId") as string;
     const loanAmount = parseFloat(formData.get("loanAmount") as string);
     const interestRate = parseFloat(formData.get("interest") as string);
@@ -62,4 +62,7 @@ export async function createLoan(formData: FormData) {
     revalidatePath("/loans");
     revalidatePath("/repayments");
     revalidatePath("/dashboard");
+
+    return loan.id;
 }
+

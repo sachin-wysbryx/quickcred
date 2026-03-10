@@ -3,8 +3,14 @@
 import { useState, useTransition } from "react";
 import { Button } from "@repo/ui";
 import { processCustomPayment } from "@/lib/actions/repayment";
-
 import { formatCurrency } from "@repo/utils";
+import {
+    Wallet,
+    X,
+    TrendingDown,
+    Calendar,
+    IndianRupee
+} from "lucide-react";
 
 interface CustomPaymentModalProps {
     loanId: string;
@@ -42,49 +48,57 @@ export function CustomPaymentButton({
         <>
             <Button
                 variant="secondary"
+                size="sm"
                 onClick={() => setIsOpen(true)}
-                className="text-sm shadow-sm"
+                className="rounded-xl font-black text-[10px] uppercase tracking-widest"
             >
-                Custom Pay
+                <Wallet className="w-4 h-4 mr-1.5" />
+                Custom
             </Button>
 
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-2xl">
-                        <div className="flex justify-between items-start mb-4">
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+                    <div
+                        className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300"
+                        onClick={() => setIsOpen(false)}
+                    ></div>
+
+                    <div className="relative bg-card border border-border rounded-[40px] p-8 w-full max-w-lg shadow-3xl animate-in zoom-in-95 duration-300">
+                        <div className="flex justify-between items-start mb-8">
                             <div>
-                                <h2 className="text-xl font-bold text-gray-900 leading-tight">Custom Payment</h2>
-                                <p className="text-sm text-gray-500 font-medium">{customerName}</p>
+                                <h2 className="text-3xl font-black text-foreground tracking-tight">Post Payment</h2>
+                                <p className="text-sm font-bold text-primary mt-1 flex items-center gap-2">
+                                    <TrendingDown className="w-4 h-4" />
+                                    Reducing liability for {customerName}
+                                </p>
                             </div>
-                            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
-                                ✕
+                            <button
+                                type="button"
+                                onClick={() => setIsOpen(false)}
+                                className="p-2 hover:bg-muted rounded-2xl transition-colors text-muted-foreground"
+                            >
+                                <X className="w-6 h-6" />
                             </button>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-6 space-y-2">
-                            <div className="flex justify-between text-sm">
-                                <span className="text-gray-500 font-medium">Loan Total:</span>
-                                <span className="font-bold text-gray-900">{formatCurrency(totalRepayment)}</span>
+                        <div className="grid grid-cols-2 gap-4 mb-8">
+                            <div className="p-5 bg-muted/50 rounded-3xl border border-border shadow-inner text-center">
+                                <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest mb-1">Settled</p>
+                                <p className="text-xl font-black text-green-600 tracking-tighter">{formatCurrency(totalPaid)}</p>
                             </div>
-                            <div className="flex justify-between text-sm">
-                                <span className="text-gray-500 font-medium">Paid So Far:</span>
-                                <span className="font-bold text-green-600">{formatCurrency(totalPaid)}</span>
-                            </div>
-                            <div className="border-t border-gray-200 mt-2 pt-2 flex justify-between">
-                                <span className="text-gray-700 font-bold">Remaining:</span>
-                                <span className="font-extrabold text-red-600">{formatCurrency(remainingBalance)}</span>
+                            <div className="p-5 bg-destructive/5 rounded-3xl border border-destructive/10 shadow-inner text-center">
+                                <p className="text-[10px] font-black uppercase text-destructive tracking-widest mb-1">Liability</p>
+                                <p className="text-xl font-black text-destructive tracking-tighter">{formatCurrency(remainingBalance)}</p>
                             </div>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label htmlFor="amount" className="block text-sm font-bold text-gray-700 mb-1">
-                                    Payment Amount
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-3">
+                                <label htmlFor="amount" className="flex items-center text-xs font-black text-muted-foreground uppercase tracking-widest gap-2 ml-1">
+                                    <IndianRupee className="w-4 h-4" />
+                                    Disbursement Amount
                                 </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span className="text-gray-500 font-semibold sm:text-sm">₹</span>
-                                    </div>
+                                <div className="relative group">
                                     <input
                                         type="number"
                                         name="amount"
@@ -94,40 +108,42 @@ export function CustomPaymentButton({
                                         min="1"
                                         max={remainingBalance}
                                         placeholder="0.00"
-                                        className="block w-full border border-gray-300 rounded-md shadow-sm pl-7 pr-3 py-2.5 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold"
+                                        className="w-full px-8 py-5 text-2xl font-black text-foreground bg-muted/30 border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all"
                                     />
                                 </div>
                             </div>
 
-                            <div>
-                                <label htmlFor="date" className="block text-sm font-bold text-gray-700 mb-1">
-                                    Payment Date
+                            <div className="space-y-3">
+                                <label htmlFor="date" className="flex items-center text-xs font-black text-muted-foreground uppercase tracking-widest gap-2 ml-1">
+                                    <Calendar className="w-4 h-4" />
+                                    Effective Date
                                 </label>
                                 <input
                                     type="date"
                                     name="date"
                                     id="date"
                                     defaultValue={new Date().toISOString().split('T')[0]}
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2.5 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-medium"
+                                    className="w-full px-6 py-4 font-bold text-foreground bg-muted/30 border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all"
                                 />
                             </div>
 
-                            <div className="flex justify-end space-x-3 pt-4">
+                            <div className="pt-4 flex items-center gap-4">
                                 <Button
                                     variant="secondary"
                                     type="button"
                                     onClick={() => setIsOpen(false)}
                                     disabled={isPending}
-                                    className="px-4 py-2"
+                                    className="flex-1 py-7 rounded-2xl font-black uppercase tracking-widest"
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     type="submit"
+                                    variant="gradient"
                                     disabled={isPending}
-                                    className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 shadow-sm"
+                                    className="flex-[2] py-7 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-primary/20"
                                 >
-                                    {isPending ? "Journaling..." : "Submit Payment"}
+                                    {isPending ? "Journaling..." : "Process Collection"}
                                 </Button>
                             </div>
                         </form>

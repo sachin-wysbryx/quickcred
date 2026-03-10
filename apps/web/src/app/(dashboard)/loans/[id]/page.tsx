@@ -1,10 +1,22 @@
 import { db } from "@/lib/db";
-import { Card, Table } from "@repo/ui";
+import { Card, Table, Button } from "@repo/ui";
 import { formatCurrency, formatDate } from "@repo/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { markRepaymentPaid } from "@/lib/actions/repayments/markPaid";
-import { Button } from "@repo/ui";
+import {
+    ChevronLeft,
+    User,
+    PieChart,
+    IndianRupee,
+    Calendar,
+    ArrowRight,
+    CheckCircle2,
+    Clock,
+    AlertCircle,
+    TrendingUp,
+    Shield
+} from "lucide-react";
 
 export default async function LoanDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id: loanId } = await params;
@@ -27,116 +39,187 @@ export default async function LoanDetailsPage({ params }: { params: Promise<{ id
 
     const totalPaid = repayments.reduce((sum, r) => sum + Number(r.paidAmount ?? 0), 0);
     const remainingBalance = loan.totalRepayment - totalPaid;
+    const progressPercent = Math.round((totalPaid / loan.totalRepayment) * 100);
 
     return (
-        <div className="max-w-5xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center space-x-4">
-                    <Link href="/loans" className="text-gray-500 hover:text-gray-800">
-                        &larr; Back
+        <div className="space-y-8 pb-10">
+            {/* Navigation & Status Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="space-y-6">
+                    <Link href="/loans" className="inline-flex items-center text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors group">
+                        <ChevronLeft className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" />
+                        Back to Loans
                     </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Loan Details</h1>
+                    <div className="flex items-center gap-4">
+                        <div className="p-4 bg-primary/10 rounded-3xl">
+                            <Shield className="w-10 h-10 text-primary" />
+                        </div>
+                        <div>
+                            <h1 className="text-4xl font-black text-foreground tracking-tight">Loan Management</h1>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">{loan.description}</span>
+                                <span className="w-1 h-1 bg-muted-foreground/30 rounded-full"></span>
+                                <span className="text-muted-foreground text-xs font-bold font-mono">#{loan.id.slice(-8)}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <span className="px-4 py-2 text-sm font-bold uppercase tracking-wide rounded-full bg-blue-100 text-blue-700">
-                        {loan.status}
+                <div className="flex items-center gap-3">
+                    <span className={`px-4 py-2 text-xs font-black uppercase tracking-widest rounded-2xl border shadow-sm ${loan.status === "ACTIVE"
+                            ? "bg-primary/10 text-primary border-primary/20"
+                            : (loan.status === "COMPLETED" ? "bg-green-500/10 text-green-600 border-green-500/20" : "bg-destructive/10 text-destructive border-destructive/20")
+                        }`}>
+                        Status: {loan.status}
                     </span>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <Card title="Customer Info" icon={() => <span>👤</span>}>
-                    <div className="space-y-4">
-                        <div>
-                            <span className="block text-sm text-gray-500 font-medium">Name</span>
-                            <span className="block text-lg font-semibold text-gray-900">{customer.name}</span>
+            {/* Progress Card */}
+            <Card className="relative overflow-hidden p-8 bg-gradient-to-br from-card to-muted/30">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div className="flex-1 space-y-4">
+                        <div className="flex justify-between items-end">
+                            <h3 className="text-2xl font-black text-foreground tracking-tight">Repayment Progress</h3>
+                            <span className="text-4xl font-black text-primary font-mono">{progressPercent}%</span>
                         </div>
-                        <div>
-                            <span className="block text-sm text-gray-500 font-medium">Phone</span>
-                            <span className="block text-gray-800">{customer.phone}</span>
+                        <div className="w-full h-4 bg-muted rounded-full overflow-hidden shadow-inner">
+                            <div
+                                className="h-full gradient-primary rounded-full transition-all duration-1000 ease-out"
+                                style={{ width: `${progressPercent}%` }}
+                            ></div>
                         </div>
-                        <div>
-                            <span className="block text-sm text-gray-500 font-medium">Address</span>
-                            <span className="block text-gray-800">{customer.address || "N/A"}</span>
+                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
+                            <span>Initial Principal</span>
+                            <span>Remaining Balance</span>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="px-8 py-6 bg-green-500/10 rounded-3xl border border-green-500/10 text-center shadow-premium">
+                            <p className="text-[10px] font-black uppercase text-green-600 tracking-widest leading-none mb-2">Total Paid</p>
+                            <p className="text-3xl font-black text-green-600 font-mono leading-none">{formatCurrency(totalPaid)}</p>
+                        </div>
+                        <div className="px-8 py-6 bg-destructive/10 rounded-3xl border border-destructive/10 text-center shadow-premium">
+                            <p className="text-[10px] font-black uppercase text-destructive tracking-widest leading-none mb-2">Balance</p>
+                            <p className="text-3xl font-black text-destructive font-mono leading-none">{formatCurrency(remainingBalance)}</p>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Customer Snapshot */}
+                <Card title="Customer Snapshot" icon={User}>
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center font-black text-sm text-muted-foreground">
+                                {customer.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div>
+                                <h4 className="font-black text-lg text-foreground leading-none">{customer.name}</h4>
+                                <Link href={`/customers/${customer.id}`} className="text-xs font-bold text-primary hover:underline mt-1 block tracking-tight">
+                                    View Detailed Profile &rarr;
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-6 pt-2 border-t border-border/50">
+                            <div>
+                                <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest leading-none mb-2">Phone</p>
+                                <p className="text-sm font-bold text-foreground">{customer.phone}</p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest leading-none mb-2">Address</p>
+                                <p className="text-sm font-bold text-foreground max-w-[200px] truncate">{customer.address || "N/A"}</p>
+                            </div>
                         </div>
                     </div>
                 </Card>
 
-                <Card title="Loan Summary" icon={() => <span>💰</span>}>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                {/* Financial Engineering */}
+                <Card title="Loan Summary" icon={TrendingUp}>
+                    <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                         <div>
-                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider">Principal</span>
-                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.loanAmount)}</span>
-                        </div>
-                        <div>
-                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider">Interest</span>
-                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.interest)}</span>
+                            <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest leading-none mb-2">Principal</p>
+                            <p className="text-xl font-black text-foreground">{formatCurrency(loan.loanAmount)}</p>
                         </div>
                         <div>
-                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider text-indigo-500 text-opacity-80">Total Expected</span>
-                            <span className="block text-lg font-bold text-indigo-600">{formatCurrency(loan.totalRepayment)}</span>
+                            <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest leading-none mb-2">Interest</p>
+                            <p className="text-xl font-black text-foreground">{formatCurrency(loan.interest)}</p>
                         </div>
                         <div>
-                            <span className="block text-xs text-gray-500 font-bold uppercase tracking-wider">Weekly Installment</span>
-                            <span className="block text-lg font-bold text-gray-900">{formatCurrency(loan.weeklyInstallment)}</span>
+                            <p className="text-[10px] font-black uppercase text-primary tracking-widest leading-none mb-2">Total Expected</p>
+                            <p className="text-xl font-black text-primary">{formatCurrency(loan.totalRepayment)}</p>
                         </div>
-
-                        <div className="bg-green-50 p-3 rounded-lg border border-green-100 mt-2">
-                            <span className="block text-xs text-green-600 font-bold uppercase tracking-tight">Paid So Far</span>
-                            <span className="block text-xl font-black text-green-700">{formatCurrency(totalPaid)}</span>
+                        <div>
+                            <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest leading-none mb-2">Weekly EMI</p>
+                            <p className="text-xl font-black text-foreground">{formatCurrency(loan.weeklyInstallment)}</p>
                         </div>
-
-                        <div className="bg-red-50 p-3 rounded-lg border border-red-100 mt-2">
-                            <span className="block text-xs text-red-500 font-bold uppercase tracking-tight">Remaining Balance</span>
-                            <span className="block text-xl font-black text-red-700">{formatCurrency(remainingBalance)}</span>
-                        </div>
-                    </div>
-
-                    <div className="mt-6 flex justify-between items-center text-sm border-t border-gray-100 pt-4">
-                        <span className="text-gray-500 font-medium">Agreement Start Date</span>
-                        <span className="font-semibold text-gray-900">{formatDate(loan.startDate)}</span>
                     </div>
                 </Card>
             </div>
 
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-gray-900 tracking-tight">Repayment Schedule</h2>
+            {/* Repayment Schedule */}
+            <div className="space-y-6 pt-4">
+                <div className="flex items-center justify-between px-2">
+                    <h2 className="text-2xl font-black text-foreground tracking-tight">Repayment Schedule</h2>
+                    <span className="px-3 py-1 bg-muted rounded-xl text-[10px] font-black uppercase tracking-widest text-muted-foreground border">
+                        {loan.durationWeeks} Weeks Term
+                    </span>
+                </div>
+                <Table
+                    headers={["Period", "Installment", "Paid Amount", "Remaining", "Status", "Action"]}
+                    data={repayments}
+                    renderRow={(r) => {
+                        const installment = Number(r.amount ?? 0);
+                        const paid = Number(r.paidAmount ?? 0);
+                        const remaining = Math.max(0, installment - paid);
+                        const isPaid = r.paid;
+
+                        return (
+                            <tr key={r.id} className={`hover:bg-muted/50 transition-colors group ${isPaid ? 'opacity-60' : ''}`}>
+                                <td className="px-8 py-6">
+                                    <div className="flex flex-col">
+                                        <span className="font-black text-foreground">Week {r.weekNumber}</span>
+                                        <span className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Installment</span>
+                                    </div>
+                                </td>
+                                <td className="px-8 py-6">
+                                    <span className="text-base font-black text-foreground tracking-tight">{formatCurrency(installment)}</span>
+                                </td>
+                                <td className="px-8 py-6">
+                                    <span className={`text-base font-black tracking-tight ${paid > 0 ? 'text-green-600' : 'text-muted-foreground'}`}>
+                                        {formatCurrency(paid)}
+                                    </span>
+                                </td>
+                                <td className="px-8 py-6 font-black text-destructive tracking-tight">
+                                    {remaining > 0 ? formatCurrency(remaining) : "-"}
+                                </td>
+                                <td className="px-8 py-6">
+                                    {isPaid ? (
+                                        <div className="flex items-center gap-2 text-green-600 font-black text-[10px] uppercase tracking-widest bg-green-500/10 px-3 py-1.5 rounded-xl border border-green-500/20 w-fit">
+                                            <CheckCircle2 className="w-3 h-3" />
+                                            Fully Paid
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest bg-primary/10 px-3 py-1.5 rounded-xl border border-primary/20 w-fit">
+                                            <Clock className="w-3 h-3" />
+                                            Pending
+                                        </div>
+                                    )}
+                                </td>
+                                <td className="px-8 py-6">
+                                    {!isPaid && (
+                                        <form action={markRepaymentPaid.bind(null, r.id)}>
+                                            <Button variant="secondary" size="sm" className="rounded-xl group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                                                Mark as Paid
+                                            </Button>
+                                        </form>
+                                    )}
+                                </td>
+                            </tr>
+                        );
+                    }}
+                />
             </div>
-            <Table
-                headers={["Week Number", "Installment", "Paid", "Remaining", "Status", "Action"]}
-                data={repayments}
-                renderRow={(r) => {
-                    const installment = Number(r.amount ?? 0);
-                    const paid = Number(r.paidAmount ?? 0);
-                    const remaining = installment - paid;
-
-                    const status = paid >= installment ? "PAID" : (paid > 0 ? "PARTIAL" : "PENDING");
-                    const statusColor = status === "PAID"
-                        ? "text-green-700 bg-green-100"
-                        : (status === "PARTIAL" ? "text-blue-700 bg-blue-100" : "text-yellow-700 bg-yellow-100");
-
-                    return (
-                        <tr key={r.id} className="hover:bg-gray-50/40 transition-colors">
-                            <td className="px-6 py-4 font-semibold text-gray-900">Week {r.weekNumber} / {loan.durationWeeks}</td>
-                            <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(installment)}</td>
-                            <td className="px-6 py-4 text-green-600 font-semibold">{formatCurrency(paid)}</td>
-                            <td className="px-6 py-4 text-red-600 font-semibold">{formatCurrency(remaining)}</td>
-                            <td className="px-6 py-4">
-                                <span className={`inline-flex items-center text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider ${statusColor}`}>
-                                    {status}
-                                </span>
-                            </td>
-                            <td className="px-6 py-4">
-                                {!r.paid && (
-                                    <form action={markRepaymentPaid.bind(null, r.id)}>
-                                        <Button variant="secondary" className="py-1 px-3 text-sm">Mark as Paid</Button>
-                                    </form>
-                                )}
-                            </td>
-                        </tr>
-                    );
-                }}
-            />
         </div>
     );
 }
