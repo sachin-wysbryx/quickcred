@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "pnpm --filter web dev",
-    "build": "pnpm db:generate && pnpm --filter web build",
+    "build": "pnpm db:generate && pnpm --filter web... build",
     "start": "pnpm --filter web start",
     "lint": "pnpm --filter web lint",
     "db:generate": "pnpm --filter @repo/db exec prisma generate",
@@ -27,4 +27,3 @@
     ]
   }
 }
-
