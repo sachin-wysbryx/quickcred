@@ -80,6 +80,12 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
 
                 <Card title="Quick Actions" icon={() => <span>⚡</span>}>
                     <div className="space-y-3 pt-2">
+                        <a
+                            href={`tel:${customer.phone}`}
+                            className="flex w-full justify-center items-center py-2.5 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md text-sm"
+                        >
+                            <span className="mr-2">📞</span> Call Customer
+                        </a>
                         <Link href={`/loans/new?customerId=${customer.id}`} className="block w-full">
                             <Button className="w-full justify-center py-2.5 bg-indigo-600 hover:bg-indigo-700 shadow-md">
                                 + Create New Loan

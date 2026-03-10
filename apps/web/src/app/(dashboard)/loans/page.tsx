@@ -41,7 +41,13 @@ export default async function LoansPage() {
                         <td className="px-6 py-4 text-gray-600 font-semibold">{formatCurrency(loan.totalRepayment)}</td>
                         <td className="px-6 py-4 text-gray-500">{formatDate(loan.startDate)}</td>
                         <td className="px-6 py-4">{getStatusBadge(loan.status)}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 flex items-center space-x-2">
+                            <a
+                                href={`tel:${loan.customer.phone}`}
+                                className="px-2 py-1 text-[10px] font-black text-white bg-green-600 rounded hover:bg-green-700 transition-colors shadow-sm uppercase tracking-wider flex items-center"
+                            >
+                                📞 Call
+                            </a>
                             <Link href={`/loans/${loan.id}`} className="text-blue-600 hover:text-blue-800 font-medium text-sm">
                                 View Details &rarr;
                             </Link>

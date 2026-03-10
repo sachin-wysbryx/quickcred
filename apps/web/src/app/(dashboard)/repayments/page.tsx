@@ -86,11 +86,17 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
                                 )}
                             </td>
                             <td className="px-6 py-4 text-right">
-                                <div className="flex justify-end space-x-2">
+                                <div className="flex justify-end space-x-2 items-center">
+                                    <a
+                                        href={`tel:${r.loan.customer.phone}`}
+                                        className="h-8 px-2 flex items-center text-[10px] font-black text-white bg-green-600 rounded hover:bg-green-700 transition-colors shadow-sm uppercase tracking-wider"
+                                    >
+                                        📞 Call
+                                    </a>
                                     {!r.paid && (
                                         <>
                                             <form action={markRepaymentPaid.bind(null, r.id)}>
-                                                <Button variant="secondary" className="text-sm shadow-sm">Mark Paid</Button>
+                                                <Button variant="secondary" className="text-sm shadow-sm h-8">Mark Paid</Button>
                                             </form>
                                             <CustomPaymentButton
                                                 loanId={r.loanId}

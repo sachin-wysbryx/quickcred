@@ -74,7 +74,13 @@ export default async function CustomersPage({ searchParams }: PageProps) {
                             </span>
                         </td>
                         <td className="px-6 py-4 text-right">
-                            <div className="flex justify-end space-x-2">
+                            <div className="flex justify-end space-x-2 items-center">
+                                <a
+                                    href={`tel:${c.phone}`}
+                                    className="px-3 py-1.5 text-xs font-bold text-white bg-green-600 rounded-lg hover:bg-green-700 flex items-center transition-colors shadow-sm"
+                                >
+                                    <span className="mr-1.5">📞</span> Call
+                                </a>
                                 <Link href={`/customers/${c.id}`}>
                                     <Button variant="secondary" className="text-sm">View Details</Button>
                                 </Link>
