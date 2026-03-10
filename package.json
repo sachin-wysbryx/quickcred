@@ -1,8 +1,8 @@
 {
   "name": "quickcred",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "packageManager": "pnpm@10.31.0",
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
@@ -12,10 +12,6 @@
     "db:push": "pnpm --filter @repo/db exec prisma db push",
     "reset:data": "npx --yes tsx scripts/resetDatabase.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.31.0",
   "dependencies": {
     "lucide-react": "^0.577.0",
     "next-themes": "^0.4.6"

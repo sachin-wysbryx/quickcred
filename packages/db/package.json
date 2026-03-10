@@ -1,18 +1,19 @@
 {
-    "name": "@repo/db",
-    "version": "1.0.0",
-    "main": "./src/client.ts",
-    "types": "./src/client.ts",
-    "scripts": {
-        "generate": "prisma generate",
-        "push": "prisma db push"
-    },
-    "dependencies": {
-        "@prisma/client": "6.4.1"
-    },
-    "devDependencies": {
-        "@types/node": "^20.19.37",
-        "prisma": "6.4.1",
-        "typescript": "^5.9.3"
-    }
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/client.ts",
+  "types": "./src/client.ts",
+  "scripts": {
+    "generate": "prisma generate",
+    "push": "prisma db push"
+  },
+  "dependencies": {
+    "@prisma/client": "6.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.37",
+    "prisma": "6.4.1",
+    "typescript": "^5.9.3"
+  }
 }
