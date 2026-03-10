@@ -30,9 +30,9 @@ export default async function CustomersPage({ searchParams }: PageProps) {
         }
     });
 
-    const customersWithActiveCount = customers.map(c => ({
+    const customersWithActiveCount = customers.map((c: any) => ({
         ...c,
-        activeLoans: c.loans.filter(l => l.status === "ACTIVE" || l.status === "OVERDUE").length
+        activeLoans: c.loans.filter((l: any) => l.status === "ACTIVE" || l.status === "OVERDUE").length
     }));
 
     return (
@@ -69,7 +69,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
                 <Table
                     headers={["Name", "Phone", "Address", "Stats", "Status", "Actions"]}
                     data={customersWithActiveCount}
-                    renderRow={(c) => (
+                    renderRow={(c: any) => (
                         <tr key={c.id} className={`${!c.isActive ? "bg-muted/30 opacity-70" : ""} hover:bg-muted/50 transition-colors group`}>
                             <td className="px-8 py-6">
                                 <div className="flex items-center gap-3">
@@ -120,12 +120,12 @@ export default async function CustomersPage({ searchParams }: PageProps) {
 
             {/* Mobile Card View */}
             <div className="md:hidden space-y-4">
-                {customersWithActiveCount.map((c) => (
+                {customersWithActiveCount.map((c: any) => (
                     <Card key={c.id} className={`${!c.isActive ? "opacity-70" : ""}`}>
                         <div className="flex items-start justify-between">
                             <div className="flex items-center gap-3">
                                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm ${c.isActive ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}>
-                                    {c.name.split(' ').map(n => n[0]).join('')}
+                                    {c.name.split(' ').map((n: string) => n[0]).join('')}
                                 </div>
                                 <div>
                                     <h4 className="font-black text-lg tracking-tight">{c.name}</h4>
