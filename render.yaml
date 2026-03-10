@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: quickcred-admin
+    runtime: node
+    plan: free
+    buildCommand: pnpm install && pnpm run build
+    startCommand: pnpm --filter web start
+    envVars:
+      - key: DATABASE_URL
+        sync: false # User will provide this in Render dashboard
+      - key: SESSION_SECRET
+        generateValue: true # Generates a random secure secret automatically
+      - key: NODE_VERSION
+        value: 20
+      - key: PNPM_VERSION
+        value: 10.31.0
