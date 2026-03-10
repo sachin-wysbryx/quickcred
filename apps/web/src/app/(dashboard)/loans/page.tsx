@@ -89,7 +89,7 @@ export default async function LoansPage({ searchParams }: LoansPageProps) {
                 <Table
                     headers={["Customer", "Details", "Financials", "Timeline", "Status", "Actions"]}
                     data={loans}
-                    renderRow={(loan) => (
+                    renderRow={(loan: any) => (
                         <tr key={loan.id} className="hover:bg-muted/50 transition-colors group">
                             <td className="px-8 py-6">
                                 <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ export default async function LoansPage({ searchParams }: LoansPageProps) {
 
             {/* Mobile Cards */}
             <div className="md:hidden space-y-4">
-                {loans.map((loan) => (
+                {loans.map((loan: any) => (
                     <Card key={loan.id} className="relative overflow-hidden">
                         <div className="flex items-start justify-between mb-6">
                             <div className="flex items-center gap-3">

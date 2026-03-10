@@ -24,9 +24,9 @@ export default async function ReportsPage() {
         }
     });
 
-    const reportData = closedLoans.map(loan => {
+    const reportData = closedLoans.map((loan: any) => {
         const totalRepaid = loan.repayments
-            .reduce((sum, r) => sum + Number(r.paidAmount ?? 0), 0);
+            .reduce((sum: number, r: any) => sum + Number(r.paidAmount ?? 0), 0);
 
         const profit = loan.totalRepayment - loan.amountGiven;
 
@@ -40,7 +40,7 @@ export default async function ReportsPage() {
         };
     });
 
-    const totals = reportData.reduce((acc, current) => ({
+    const totals = reportData.reduce((acc: any, current: any) => ({
         profit: acc.profit + current.profit,
         totalLent: acc.totalLent + current.loanAmount,
         loansCount: acc.loansCount + 1
@@ -166,7 +166,7 @@ export default async function ReportsPage() {
                 <div className="bg-card rounded-[40px] border border-border shadow-premium overflow-hidden">
                     {reportData.length > 0 ? (
                         <div className="divide-y divide-border/50">
-                            {reportData.map((row) => (
+                            {reportData.map((row: any) => (
                                 <div key={row.id} className="flex items-center justify-between px-8 py-6 hover:bg-muted/30 transition-colors group cursor-pointer">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-2xl bg-muted/80 flex items-center justify-center font-black text-sm text-primary shadow-inner">
