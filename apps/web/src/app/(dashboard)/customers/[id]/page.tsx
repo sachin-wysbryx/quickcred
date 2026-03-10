@@ -33,8 +33,8 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
         notFound();
     }
 
-    const loansWithTotals = customer.loans.map(loan => {
-        const totalPaid = loan.repayments.reduce((sum, r) => sum + Number(r.paidAmount ?? 0), 0);
+    const loansWithTotals = customer.loans.map((loan: any) => {
+        const totalPaid = loan.repayments.reduce((sum: number, r: any) => sum + Number(r.paidAmount ?? 0), 0);
         return {
             ...loan,
             totalPaid
@@ -52,7 +52,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                     </Link>
                     <div className="flex items-center gap-6">
                         <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center font-black text-2xl text-primary shadow-inner">
-                            {customer.name.split(' ').map(n => n[0]).join('')}
+                            {customer.name.split(' ').map((n: string) => n[0]).join('')}
                         </div>
                         <div>
                             <h1 className="text-4xl font-black text-foreground tracking-tight">{customer.name}</h1>
@@ -114,7 +114,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                         </div>
                         <div className="bg-primary px-6 py-8 rounded-3xl flex flex-col items-center justify-center text-center shadow-lg shadow-indigo-500/20 group hover:scale-[1.02] transition-all">
                             <span className="text-4xl font-black text-white mb-2 transition-transform group-hover:scale-110">
-                                {customer.loans.filter(l => l.status === "ACTIVE" || l.status === "OVERDUE").length}
+                                {customer.loans.filter((l: any) => l.status === "ACTIVE" || l.status === "OVERDUE").length}
                             </span>
                             <span className="text-[10px] font-black uppercase text-white/70 tracking-widest leading-none">Active Loans</span>
                         </div>
