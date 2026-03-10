@@ -1,208 +1,125 @@
-# QuickCred – Loan & Installment Management System
+# QuickCred Admin Dashboard
 
-QuickCred is a web-based **Loan and Installment Management System** designed for small lending businesses.
-It allows administrators to manage customers, issue loans, track weekly repayments, and monitor overall business performance through a centralized dashboard.
+A modern, high-performance fintech admin dashboard built for loan management, customer tracking, and automated repayment scheduling.
 
-The system is built with modern web technologies to ensure scalability, maintainability, and efficient financial tracking.
+![QuickCred Preview](https://antigravity.google/placeholder-ui-preview.png)
 
----
+## 🚀 Overview
 
-## 🚀 Features
+QuickCred is a comprehensive solution for micro-finance and credit management. It provides a real-time interface for administrators to manage the entire loan lifecycle—from customer onboarding and loan issuance to automated repayment tracking and portfolio analytics.
 
-* **Admin Authentication**
+### Key Features
 
-  * Secure login system for the administrator.
-
-* **Customer Management**
-
-  * Add new customers
-  * Edit customer information
-  * View customer details
-
-* **Loan Management**
-
-  * Create loans for customers
-  * Automatically calculate loan interest
-  * Generate repayment schedules
-
-* **Weekly Installment Tracking**
-
-  * 12-week installment system
-  * Record weekly payments
-  * Track pending payments
-
-* **Loan Status Monitoring**
-
-  * Active Loans
-  * Completed Loans
-  * Overdue Loans
-
-* **Dashboard Analytics**
-
-  * Total Customers
-  * Active Loans
-  * Completed Loans
-  * Pending Payments
-  * Total Profit
+-   **Dashboard:** High-level metrics for active loans, total customers, pending payments, and expected profit.
+-   **Customer Management:** Full CRM for managing borrower profiles, contact details, and account status (active/deactivated).
+-   **Loan Issuance:** Streamlined workflow to create new loans with automated 12-week repayment schedules.
+-   **Collection Queue:** Intelligent tracking of weekly installments with clear "Upcoming", "Overdue", and "Collected" status indicators.
+-   **Advanced Repayments:** Support for standard settlements and custom partial payments with automatic liability adjustment.
+-   **Portfolio Analytics:** Detailed reporting on volume disbursed, net profit generated, and customer-specific ROI.
+-   **Secure Authentication:** Restricted admin access using OTP-based verification and JWT session management.
+-   **Modern UI/UX:** Fully responsive design with optimized light/dark modes and premium aesthetics.
 
 ---
 
-## 💰 Example Loan Model
+## 🏗️ Architecture & Folder Structure
 
-| Field                    | Value    |
-| ------------------------ | -------- |
-| Loan Amount              | ₹10,000  |
-| Interest                 | ₹1,500   |
-| Amount Given to Customer | ₹8,500   |
-| Total Repayment          | ₹10,000  |
-| Duration                 | 12 Weeks |
-| Weekly Installment       | ₹833.33  |
+The project is architected as a **monorepo** using **pnpm workspaces** for maximum modularity and code sharing.
 
----
-
-## 🏗 Tech Stack
-
-**Frontend**
-
-* Next.js
-* React
-* TypeScript
-* Tailwind CSS
-
-**Backend**
-
-* Next.js API Routes / Node.js
-
-**Database**
-
-* PostgreSQL
-
-**ORM**
-
-* Prisma
-
-**Hosting**
-
-* Vercel (Frontend + APIs)
-* Neon / Supabase PostgreSQL
-
----
-
-## 📂 Project Structure
-
-```
+```text
 quickcred/
+├── apps/
+│   └── web/                # Next.js 15 (App Router) Frontend
+│       ├── src/app/        # App Router pages and layouts
+│       ├── src/components/ # Client & Server components
+│       ├── src/lib/        # Internal logic: Server Actions, API, Auth
+│       └── middleware.ts   # JWT-based Route protection
 │
-├── apps
-│   └── web                # Next.js application
+├── packages/
+│   ├── db/                 # Shared Database Layer
+│   │   ├── prisma/         # Prisma Schema (MongoDB)
+│   │   └── src/            # Generated Prisma Client and helpers
+│   ├── ui/                 # Shared Design System
+│   │   └── src/            # Core UI blocks: Card, Table, Button
+│   └── utils/              # Shared logic & helpers
+│       └── src/            # Loan math, Formatting, OTP, Emails
 │
-├── packages
-│   └── db                 # Prisma schema and database client
-│
-├── prisma
-│   └── schema.prisma
-│
-├── public
-│
-├── src
-│   ├── components
-│   ├── modules
-│   ├── services
-│   └── utils
-│
-└── README.md
+├── scripts/                # Development & Maintenance scripts
+└── pnpm-workspace.yaml     # Workspace configuration
 ```
 
 ---
 
-## ⚙️ Installation
+## 🛠️ Technology Stack
 
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/quickcred.git
-cd quickcred
-```
-
-Install dependencies:
-
-```bash
-pnpm install
-```
-
-Run the development server:
-
-```bash
-pnpm dev
-```
+-   **Core:** [Next.js 15+](https://nextjs.org/) (App Router), [React 19](https://react.dev/)
+-   **Language:** [TypeScript](https://www.typescriptlang.org/)
+-   **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+-   **Database:** [MongoDB](https://www.mongodb.com/) with [Prisma ORM](https://www.prisma.io/)
+-   **Auth:** JWT via [Jose](https://github.com/panva/jose)
+-   **Icons:** [Lucide React](https://lucide.dev/)
+-   **Theming:** [next-themes](https://github.com/pacocoursey/next-themes)
 
 ---
 
-## 🗄 Database Setup
+## 🏁 Getting Started
 
-1. Create a PostgreSQL database (Neon / Supabase recommended)
-2. Add the connection string in `.env`
+### Prerequisites
 
-```
-DATABASE_URL="postgresql://user:password@host:port/database"
-```
+-   Node.js (v20+)
+-   pnpm (v10+)
+-   MongoDB Instance (Local or Atlas)
 
-Run migrations:
+### Installation
 
-```bash
-pnpm prisma migrate dev
-```
+1.  **Clone and install dependencies:**
+    ```bash
+    pnpm install
+    ```
 
-Generate Prisma client:
+2.  **Environment Setup:** Create a `.env` file in `packages/db` and `apps/web`:
+    ```env
+    DATABASE_URL="your_mongodb_connection_string"
+    SESSION_SECRET="your_secure_random_key"
+    ```
 
-```bash
-pnpm prisma generate
-```
+3.  **Synchronize Database:**
+    ```bash
+    pnpm db:push
+    pnpm db:generate
+    ```
 
----
-
-## 📊 System Workflow
-
-1. Admin logs into the system
-2. Admin adds a new customer
-3. Admin creates a loan for the customer
-4. System automatically generates **12 weekly installments**
-5. Admin records weekly payments
-6. Loan status changes to **Completed** once all installments are paid
-
----
-
-## 📅 Development Roadmap
-
-| Phase                | Estimated Time |
-| -------------------- | -------------- |
-| Planning             | 1 Day          |
-| Database Setup       | 1 Day          |
-| Backend Development  | 3 Days         |
-| Frontend Development | 4 Days         |
-| Testing & Fixes      | 2 Days         |
+4.  **Launch Dashboard:**
+    ```bash
+    pnpm dev
+    ```
 
 ---
 
-## 🔐 User Roles
+## 🔀 Core Workflows
 
-Currently the system supports:
+### 1. Issue a New Loan
+-   Select an active customer.
+-   Define Principal, Interest Rate, and Start Date.
+-   The system **automatically generates** 12 weekly `Repayment` records on submission.
 
-* **Admin** – Full control over customers, loans, repayments, and dashboard analytics.
+### 2. Collection Management
+-   **Settle:** Mark a specific week's installment as fully paid.
+-   **Custom Payment:** Apply a custom amount. The system will intelligently reduce the remaining liability starting from the current pending week.
+
+### 3. Customer Lifecycle
+-   Customers can be deactivated to prevent new loan issuance.
+-   Issuing a new loan to an inactive customer will automatically reactivate them.
 
 ---
 
-## 📈 Future Improvements
+## 🔧 Maintenance Scripts
 
-* Payment integration (UPI / Razorpay)
-* Customer portal
-* Automated payment reminders
-* Financial reports and exports
-* Multi-admin support
+-   `pnpm dev`: Start the development server.
+-   `pnpm build`: Create a production-ready build of the entire monorepo.
+-   `pnpm reset:data`: **CAUTION:** Clears and resets the database (runs `scripts/resetDatabase.ts`).
+-   `pnpm db:generate`: Regenerates the Prisma Client.
 
 ---
 
-## 📜 License
-
-This project is created for internal business usage.
-You may modify and extend it according to your needs.
+## 📄 License
+ISC License

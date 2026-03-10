@@ -1,0 +1,17 @@
+{
+    "name": "@repo/ui",
+    "version": "1.0.0",
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+    },
+    "devDependencies": {
+        "@types/react": "latest",
+        "@types/react-dom": "latest",
+        "react": "19.2.3",
+        "react-dom": "19.2.3",
+        "typescript": "latest"
+    }
+}
