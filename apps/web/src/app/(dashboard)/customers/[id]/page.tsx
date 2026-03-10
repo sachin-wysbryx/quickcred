@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Customer, Loan, Repayment } from "@repo/db";
 import { Card, Table, Button } from "@repo/ui";
 import { formatCurrency, formatDate } from "@repo/utils";
 import Link from "next/link";
@@ -33,8 +34,8 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
         notFound();
     }
 
-    const loansWithTotals = customer.loans.map((loan: any) => {
-        const totalPaid = loan.repayments.reduce((sum: number, r: any) => sum + Number(r.paidAmount ?? 0), 0);
+    const loansWithTotals = customer.loans.map((loan: Loan & { repayments: Repayment[] }) => {
+        const totalPaid = loan.repayments.reduce((sum: number, r: Repayment) => sum + Number(r.paidAmount ?? 0), 0);
         return {
             ...loan,
             totalPaid
@@ -114,7 +115,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                         </div>
                         <div className="bg-primary px-6 py-8 rounded-3xl flex flex-col items-center justify-center text-center shadow-lg shadow-indigo-500/20 group hover:scale-[1.02] transition-all">
                             <span className="text-4xl font-black text-white mb-2 transition-transform group-hover:scale-110">
-                                {customer.loans.filter((l: any) => l.status === "ACTIVE" || l.status === "OVERDUE").length}
+                                {customer.loans.filter((l: Loan) => l.status === "ACTIVE" || l.status === "OVERDUE").length}
                             </span>
                             <span className="text-[10px] font-black uppercase text-white/70 tracking-widest leading-none">Active Loans</span>
                         </div>
@@ -157,7 +158,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                     <Table
                         headers={["Details", "Financials", "Timeline", "Status", "Progress", "Action"]}
                         data={loansWithTotals}
-                        renderRow={(loan) => (
+                        renderRow={(loan: Loan & { totalPaid: number }) => (
                             <tr key={loan.id} className="hover:bg-muted/50 transition-colors group">
                                 <td className="px-8 py-6">
                                     <span className="block font-black text-foreground tracking-tight">{loan.description}</span>

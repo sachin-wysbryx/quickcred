@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Customer, Loan } from "@repo/db";
 import { Table, Button, Card } from "@repo/ui";
 import Link from "next/link";
 import { CustomerStatusButton } from "@/components/customers/CustomerStatusButton";
@@ -23,16 +24,14 @@ export default async function CustomersPage({ searchParams }: PageProps) {
         where,
         orderBy: { createdAt: "desc" },
         include: {
-            loans: {
-                select: { status: true }
-            },
+            loans: true,
             _count: { select: { loans: true } }
         }
     });
 
-    const customersWithActiveCount = customers.map((c: any) => ({
+    const customersWithActiveCount = customers.map((c: Customer & { loans: Loan[], _count: { loans: number } }) => ({
         ...c,
-        activeLoans: c.loans.filter((l: any) => l.status === "ACTIVE" || l.status === "OVERDUE").length
+        activeLoans: c.loans.filter((l: Loan) => l.status === "ACTIVE" || l.status === "OVERDUE").length
     }));
 
     return (
@@ -69,7 +68,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
                 <Table
                     headers={["Name", "Phone", "Address", "Stats", "Status", "Actions"]}
                     data={customersWithActiveCount}
-                    renderRow={(c: any) => (
+                    renderRow={(c: Customer & { activeLoans: number, _count: { loans: number } }) => (
                         <tr key={c.id} className={`${!c.isActive ? "bg-muted/30 opacity-70" : ""} hover:bg-muted/50 transition-colors group`}>
                             <td className="px-8 py-6">
                                 <div className="flex items-center gap-3">
@@ -120,7 +119,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
 
             {/* Mobile Card View */}
             <div className="md:hidden space-y-4">
-                {customersWithActiveCount.map((c: any) => (
+                {customersWithActiveCount.map((c: Customer & { activeLoans: number, _count: { loans: number } }) => (
                     <Card key={c.id} className={`${!c.isActive ? "opacity-70" : ""}`}>
                         <div className="flex items-start justify-between">
                             <div className="flex items-center gap-3">

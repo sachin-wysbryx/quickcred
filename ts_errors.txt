@@ -1,0 +1,7 @@
+src/app/(dashboard)/customers/[id]/page.tsx(2,43): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
+src/app/(dashboard)/loans/page.tsx(2,32): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
+src/app/(dashboard)/repayments/page.tsx(2,43): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
+src/app/(dashboard)/reports/page.tsx(2,43): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
+undefined
+C:\My projects\quickcred\apps\web:
+ΓÇëERR_PNPM_RECURSIVE_EXEC_FIRST_FAILΓÇë Command failed with exit code 2: tsc --noEmit

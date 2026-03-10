@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Customer, Loan, Repayment } from "@repo/db";
 import { Table, Card } from "@repo/ui";
 import { formatCurrency } from "@repo/utils";
 import {
@@ -24,9 +25,9 @@ export default async function ReportsPage() {
         }
     });
 
-    const reportData = closedLoans.map((loan: any) => {
+    const reportData = closedLoans.map((loan: Loan & { customer: Customer, repayments: Repayment[] }) => {
         const totalRepaid = loan.repayments
-            .reduce((sum: number, r: any) => sum + Number(r.paidAmount ?? 0), 0);
+            .reduce((sum: number, r: Repayment) => sum + Number(r.paidAmount ?? 0), 0);
 
         const profit = loan.totalRepayment - loan.amountGiven;
 
@@ -40,9 +41,9 @@ export default async function ReportsPage() {
         };
     });
 
-    const totals = reportData.reduce((acc: any, current: any) => ({
+    const totals = reportData.reduce((acc: { profit: number; totalLent: number; loansCount: number }, current: { profit: number; loanAmount: number }) => ({
         profit: acc.profit + current.profit,
-        totalLent: acc.totalLent + current.loanAmount,
+        totalLent: acc.totalLent + Number(current.loanAmount), // ensures addition
         loansCount: acc.loansCount + 1
     }), { profit: 0, totalLent: 0, loansCount: 0 });
 
@@ -166,7 +167,7 @@ export default async function ReportsPage() {
                 <div className="bg-card rounded-[40px] border border-border shadow-premium overflow-hidden">
                     {reportData.length > 0 ? (
                         <div className="divide-y divide-border/50">
-                            {reportData.map((row: any) => (
+                            {reportData.map((row: { id: string; customerName: string; phone: string; profit: number }) => (
                                 <div key={row.id} className="flex items-center justify-between px-8 py-6 hover:bg-muted/30 transition-colors group cursor-pointer">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-2xl bg-muted/80 flex items-center justify-center font-black text-sm text-primary shadow-inner">
