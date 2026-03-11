@@ -25,5 +25,8 @@
       "sharp",
       "unrs-resolver"
     ]
+  },
+  "devDependencies": {
+    "next": "16.1.6"
   }
 }
