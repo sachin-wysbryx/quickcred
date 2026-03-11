@@ -37,7 +37,7 @@ export default async function LoanDetailsPage({ params }: { params: Promise<{ id
 
     const { customer, repayments } = loan;
 
-    const totalPaid = repayments.reduce((sum, r) => sum + Number(r.paidAmount ?? 0), 0);
+    const totalPaid = repayments.reduce((sum: number, r: any) => sum + Number(r.paidAmount ?? 0), 0);
     const remainingBalance = loan.totalRepayment - totalPaid;
     const progressPercent = Math.round((totalPaid / loan.totalRepayment) * 100);
 
@@ -168,7 +168,7 @@ export default async function LoanDetailsPage({ params }: { params: Promise<{ id
                 <Table
                     headers={["Period", "Installment", "Paid Amount", "Remaining", "Status", "Action"]}
                     data={repayments}
-                    renderRow={(r) => {
+                    renderRow={(r: any) => {
                         const installment = Number(r.amount ?? 0);
                         const paid = Number(r.paidAmount ?? 0);
                         const remaining = Math.max(0, installment - paid);

@@ -34,7 +34,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
         notFound();
     }
 
-    const loansWithTotals = customer.loans.map((loan: Loan & { repayments: Repayment[] }) => {
+    const loansWithTotals = customer.loans.map((loan: any) => {
         const totalPaid = loan.repayments.reduce((sum: number, r: Repayment) => sum + Number(r.paidAmount ?? 0), 0);
         return {
             ...loan,
@@ -158,7 +158,7 @@ export default async function CustomerDetailsPage({ params }: { params: Promise<
                     <Table
                         headers={["Details", "Financials", "Timeline", "Status", "Progress", "Action"]}
                         data={loansWithTotals}
-                        renderRow={(loan: Loan & { totalPaid: number }) => (
+                        renderRow={(loan: any) => (
                             <tr key={loan.id} className="hover:bg-muted/50 transition-colors group">
                                 <td className="px-8 py-6">
                                     <span className="block font-black text-foreground tracking-tight">{loan.description}</span>

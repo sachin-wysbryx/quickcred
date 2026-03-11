@@ -55,7 +55,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
 
     const now = new Date();
 
-    const repaymentsWithStatus = allRepayments.map((r: Repayment & { loan: Loan & { customer: Customer, repayments: Repayment[] } }) => {
+    const repaymentsWithStatus = allRepayments.map((r: any) => {
         const dueDate = new Date(r.loan.startDate);
         dueDate.setDate(dueDate.getDate() + (r.weekNumber * 7));
 
@@ -70,7 +70,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
         };
     });
 
-    const filteredRepayments = repaymentsWithStatus.filter((r: Repayment & { loan: Loan & { customer: Customer, repayments: Repayment[] }, dueDate: Date, isOverdue: boolean, daysDiff: number }) => {
+    const filteredRepayments = repaymentsWithStatus.filter((r: any) => {
         if (status === "OVERDUE") return r.isOverdue;
         if (status === "COLLECTED") return r.paid;
         if (status === "ALL" || !status) return !r.paid; // Default to showing pending queue
@@ -101,7 +101,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
 
             {/* Desktop and Mobile use Card Based Layout for Repayments as per Stitch design */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredRepayments.map((r: Repayment & { loan: Loan & { customer: Customer, repayments: Repayment[] }, dueDate: Date, isOverdue: boolean, daysDiff: number }) => {
+                {filteredRepayments.map((r: any) => {
                     const installment = Number(r.amount ?? 0);
                     const isPaid = r.paid;
                     const allLoanRepayments = r.loan.repayments;

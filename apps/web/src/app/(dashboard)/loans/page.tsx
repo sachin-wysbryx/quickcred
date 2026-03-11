@@ -27,18 +27,20 @@ interface LoansPageProps {
 export default async function LoansPage({ searchParams }: LoansPageProps) {
     const { status, query } = await searchParams;
 
+    const where: any = {
+        AND: [
+            status && status !== "ALL" ? { status: status as any } : {},
+            query ? {
+                OR: [
+                    { customer: { name: { contains: query, mode: 'insensitive' } } },
+                    { description: { contains: query, mode: 'insensitive' } }
+                ]
+            } : {}
+        ]
+    };
+
     const loans = await db.loan.findMany({
-        where: {
-            AND: [
-                status && status !== "ALL" ? { status: status as any } : {},
-                query ? {
-                    OR: [
-                        { customer: { name: { contains: query, mode: 'insensitive' } } },
-                        { description: { contains: query, mode: 'insensitive' } }
-                    ]
-                } : {}
-            ]
-        },
+        where,
         orderBy: { createdAt: "desc" },
         include: { customer: true }
     });

@@ -30,7 +30,7 @@ export async function markRepaymentPaid(repaymentId: string) {
     const loan = updatedRepayment.loan;
 
     // FIX 4: Auto Update Loan Status based on remaining balance
-    const totalPaid = loan.repayments.reduce((sum, r) => sum + Number(r.paidAmount ?? 0), 0);
+    const totalPaid = loan.repayments.reduce((sum: number, r: any) => sum + Number(r.paidAmount ?? 0), 0);
     const remainingBalance = loan.totalRepayment - totalPaid;
 
     await db.loan.update({

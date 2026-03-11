@@ -16,7 +16,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
     const { status = "active" } = await searchParams;
 
     // Construct where clause
-    const where: any = {};
+    const where: { isActive?: boolean } = {};
     if (status === "active") where.isActive = true;
     if (status === "inactive") where.isActive = false;
 
@@ -29,7 +29,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
         }
     });
 
-    const customersWithActiveCount = customers.map((c: Customer & { loans: Loan[], _count: { loans: number } }) => ({
+    const customersWithActiveCount = customers.map((c) => ({
         ...c,
         activeLoans: c.loans.filter((l: Loan) => l.status === "ACTIVE" || l.status === "OVERDUE").length
     }));
@@ -68,7 +68,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
                 <Table
                     headers={["Name", "Phone", "Address", "Stats", "Status", "Actions"]}
                     data={customersWithActiveCount}
-                    renderRow={(c: Customer & { activeLoans: number, _count: { loans: number } }) => (
+                    renderRow={(c: any) => (
                         <tr key={c.id} className={`${!c.isActive ? "bg-muted/30 opacity-70" : ""} hover:bg-muted/50 transition-colors group`}>
                             <td className="px-8 py-6">
                                 <div className="flex items-center gap-3">
@@ -119,7 +119,7 @@ export default async function CustomersPage({ searchParams }: PageProps) {
 
             {/* Mobile Card View */}
             <div className="md:hidden space-y-4">
-                {customersWithActiveCount.map((c: Customer & { activeLoans: number, _count: { loans: number } }) => (
+                {customersWithActiveCount.map((c: any) => (
                     <Card key={c.id} className={`${!c.isActive ? "opacity-70" : ""}`}>
                         <div className="flex items-start justify-between">
                             <div className="flex items-center gap-3">

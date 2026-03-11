@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         })
     ]);
 
-    const totalProfit = loans.reduce((acc, loan) => acc + loan.interest, 0);
+    const totalProfit = loans.reduce((acc: number, loan) => acc + loan.interest, 0);
 
     const stats = [
         { title: "Total Customers", value: totalCustomers.toLocaleString(), icon: Users, trend: "+12%" },
