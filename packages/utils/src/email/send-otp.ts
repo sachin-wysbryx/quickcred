@@ -3,18 +3,18 @@ import nodemailer from "nodemailer";
 /**
  * Sends an OTP email using SMTP configuration from environment variables.
  * Designed to work in Next.js Server Actions and production environments like Render.
+ * Forces IPv4 to avoid ENETUNREACH errors commonly seen on Render (IPv6 issues).
  */
 export async function sendOtpEmail(email: string, otp: string) {
-    const host = process.env.SMTP_HOST;
-    const port = Number(process.env.SMTP_PORT) || 587;
+    const host = process.env.SMTP_HOST || "smtp.gmail.com";
+    const port = Number(process.env.SMTP_PORT) || 465;
     const user = process.env.SMTP_USER;
     const pass = process.env.SMTP_PASS;
     const from = process.env.SMTP_FROM || `"QuickCred Admin" <${user}>`;
 
     // 1. Validate configuration
-    if (!host || !user || !pass) {
+    if (!user || !pass) {
         const missing = [];
-        if (!host) missing.push("SMTP_HOST");
         if (!user) missing.push("SMTP_USER");
         if (!pass) missing.push("SMTP_PASS");
         
@@ -27,6 +27,7 @@ export async function sendOtpEmail(email: string, otp: string) {
         host,
         port,
         secure: port === 465, // true for 465, false for 587 (STARTTLS)
+        family: 4,           // Force IPv4 to avoid IPv6 connection issues on Render
         auth: {
             user,
             pass,
@@ -35,7 +36,7 @@ export async function sendOtpEmail(email: string, otp: string) {
         tls: {
             rejectUnauthorized: true
         }
-    });
+    } as any);
 
     // 3. Define the HTML Email Template
     const htmlTemplate = `
@@ -64,7 +65,7 @@ export async function sendOtpEmail(email: string, otp: string) {
 
     // 4. Attempt to send
     try {
-        console.log(`[SMTP] Attempting delivery to ${email} via ${host}:${port}...`);
+        console.log(`[SMTP] Attempting delivery to ${email} via ${host}:${port} (Forcing IPv4)...`);
         
         const info = await transporter.sendMail({
             from,
@@ -84,6 +85,9 @@ export async function sendOtpEmail(email: string, otp: string) {
         console.error(`Error Code: ${error.code || 'N/A'}`);
         console.error(`Command: ${error.command || 'N/A'}`);
         console.error(`Message: ${error.message}`);
+        if (error.code === 'ESOCKET') {
+           console.error("HINT: This is often an IPv6 routing issue on cloud hosts. Forcing IPv4 may resolve it.");
+        }
         console.error("-----------------------------");
         
         // 6. Throw error to be caught by the server action
