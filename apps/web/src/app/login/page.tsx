@@ -130,7 +130,7 @@ export default function LoginPage() {
                                     className="w-full py-7 rounded-2xl text-base font-black uppercase tracking-widest shadow-lg shadow-primary/25 group"
                                     disabled={isPending}
                                 >
-                                    <span>{isPending ? "Verifying..." : "Initialize Bridge"}</span>
+                                    <span>{isPending ? "Verifying..." : "Send OTP"}</span>
                                     {!isPending && <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />}
                                 </Button>
                             </form>
