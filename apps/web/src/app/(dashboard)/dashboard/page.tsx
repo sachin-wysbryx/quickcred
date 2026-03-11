@@ -9,17 +9,32 @@ import {
     Clock,
     TrendingUp,
     Search,
-    Rocket
+    Rocket,
+    ArrowUpRight,
+    CircleDollarSign
 } from "lucide-react";
+import Link from "next/link";
 
 export default async function DashboardPage() {
     // Parallel data fetching
-    const [totalCustomers, activeLoans, completedLoans, pendingPayments, loans] = await Promise.all([
+    const [totalCustomers, activeLoans, completedLoans, pendingPayments, loans, recentRepayments] = await Promise.all([
         db.customer.count(),
         db.loan.count({ where: { status: "ACTIVE" } }),
         db.loan.count({ where: { status: "COMPLETED" } }),
         db.repayment.count({ where: { paid: false } }),
         db.loan.findMany({ select: { interest: true } }),
+        db.repayment.findMany({
+            where: { paid: true },
+            orderBy: { paidDate: "desc" },
+            take: 5,
+            include: {
+                loan: {
+                    include: {
+                        customer: true
+                    }
+                }
+            }
+        })
     ]);
 
     const totalProfit = loans.reduce((acc, loan) => acc + loan.interest, 0);
@@ -63,25 +78,87 @@ export default async function DashboardPage() {
             </div>
 
             <div className="grid grid-cols-1 gap-8">
-                <Card className="min-h-[400px] flex flex-col items-center justify-center text-center">
-                    <div className="space-y-6 max-w-md mx-auto">
-                        <div className="relative mx-auto w-32 h-32 flex items-center justify-center">
-                            <div className="absolute inset-0 bg-primary/10 rounded-full animate-ping"></div>
-                            <div className="relative w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center shadow-inner">
-                                <Search className="w-12 h-12 text-primary" />
-                            </div>
+                <Card className="p-0 overflow-hidden border-white/5 bg-white/[0.02] backdrop-blur-xl">
+                    <div className="px-8 py-6 border-b border-white/5 flex items-center justify-between">
+                        <div>
+                            <h3 className="text-xl font-black text-foreground tracking-tight">Recent Repayments</h3>
+                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Live Transaction Stream</p>
                         </div>
-                        <div className="space-y-2">
-                            <h3 className="text-2xl font-black text-foreground tracking-tight">Ready for Action</h3>
-                            <p className="text-muted-foreground font-medium">
-                                No pending recovery tasks at the moment. Your portfolio is looking healthy!
-                            </p>
+                        <div className="p-2 bg-primary/10 rounded-xl">
+                            <CircleDollarSign className="w-5 h-5 text-primary" />
                         </div>
-                        <div className="pt-4">
-                            <button className="px-8 py-3 bg-muted hover:bg-muted/80 rounded-2xl font-black text-xs uppercase tracking-widest transition-all">
-                                Refresh Queue
-                            </button>
-                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="group">
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 border-b border-white/5">Customer</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 border-b border-white/5">Loan Amount</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 border-b border-white/5">Week</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 border-b border-white/5">Paid Amount</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 border-b border-white/5">Paid Date</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 border-b border-white/5">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {recentRepayments.length > 0 ? (
+                                    recentRepayments.map((repayment) => (
+                                        <tr key={repayment.id} className="group hover:bg-white/[0.02] transition-colors">
+                                            <td className="px-8 py-5">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-primary/20 to-purple-500/20 flex items-center justify-center font-black text-xs text-primary">
+                                                        {repayment.loan.customer.name.charAt(0)}
+                                                    </div>
+                                                    <span className="font-bold text-sm text-foreground">{repayment.loan.customer.name}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-8 py-5 font-bold text-sm tabular-nums text-muted-foreground">
+                                                {formatCurrency(repayment.loan.loanAmount)}
+                                            </td>
+                                            <td className="px-8 py-5 font-black text-[10px] uppercase tracking-widest text-primary/80">
+                                                Week {repayment.weekNumber}
+                                            </td>
+                                            <td className="px-8 py-5">
+                                                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-black tabular-nums">
+                                                    +{formatCurrency(repayment.paidAmount)}
+                                                </span>
+                                            </td>
+                                            <td className="px-8 py-5 text-sm font-medium text-muted-foreground">
+                                                {repayment.paidDate ? new Date(repayment.paidDate).toLocaleDateString('en-IN', {
+                                                    day: '2-digit',
+                                                    month: 'short'
+                                                }) : 'N/A'}
+                                            </td>
+                                            <td className="px-8 py-5">
+                                                <Link href={`/loans/${repayment.loanId}`} className="p-2 hover:bg-white/5 rounded-lg transition-colors inline-block">
+                                                    <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={6} className="px-8 py-20 text-center">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <Rocket className="w-8 h-8 text-muted-foreground/20" />
+                                                <p className="text-sm font-bold text-muted-foreground">No repayments recorded yet.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="p-6 border-t border-white/5 bg-white/[0.01]">
+                        <Link 
+                            href="/repayments" 
+                            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-black uppercase tracking-[0.2em] text-foreground transition-all"
+                        >
+                            View All Repayments
+                            <ArrowUpRight className="w-4 h-4" />
+                        </Link>
                     </div>
                 </Card>
             </div>

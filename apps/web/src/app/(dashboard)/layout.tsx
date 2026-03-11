@@ -34,9 +34,9 @@ export default function DashboardLayout({
     ];
 
     return (
-        <div className="min-h-screen bg-background flex flex-col md:flex-row transition-colors duration-300">
+        <div className="h-screen bg-background flex flex-col md:flex-row transition-colors duration-300 overflow-hidden">
             {/* Desktop Sidebar */}
-            <aside className="hidden md:flex w-72 bg-card border-r border-border flex-col flex-shrink-0 shadow-premium">
+            <aside className="hidden md:flex w-72 bg-card border-r border-border flex-col flex-shrink-0 shadow-premium fixed left-0 top-0 h-screen overflow-y-auto z-40">
                 <div className="h-20 flex items-center px-8 border-b border-border/50">
                     <div className="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-indigo-500/20">
                         <CircleDollarSign className="text-white w-6 h-6" />
@@ -157,7 +157,7 @@ export default function DashboardLayout({
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col min-h-screen">
+            <main className="flex-1 flex flex-col h-screen overflow-y-auto md:ml-72">
                 {/* Top Header */}
                 <header className="h-16 md:h-20 bg-background/80 backdrop-blur-md sticky top-0 z-30 border-b border-border/50 flex items-center px-4 md:px-10 justify-between gap-4">
                     <div className="flex items-center gap-3">
