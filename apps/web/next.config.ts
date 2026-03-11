@@ -10,10 +10,6 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  eslint: {
-    // Only run ESLint on non-production builds
-    ignoreDuringBuilds: true,
-  }
 };
 
 export default nextConfig;
