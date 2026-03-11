@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
 export async function sendOtpEmail(email: string, otp: string) {
+    console.log(`Attempting to send OTP email via ${process.env.SMTP_HOST}:${process.env.SMTP_PORT} (User: ${process.env.SMTP_USER})`);
+
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: Number(process.env.SMTP_PORT) || 587,

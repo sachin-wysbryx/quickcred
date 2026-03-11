@@ -25,7 +25,7 @@ export async function createSession() {
     // Only one authorized admin, so we don't necessarily need dynamic payload,
     // but we can pass standard info
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day
-    const token = await encrypt({ role: "admin", email: "sachinrv19@gmail.com", expires });
+    const token = await encrypt({ role: "admin", email: process.env.ALLOWED_ADMIN_EMAIL || "sachinrv19@gmail.com", expires });
 
     (await cookies()).set("session", token, {
         expires,

@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { generateOTP } from "@repo/utils";
 import { sendOtpEmail } from "@repo/utils/src/email/send-otp";
 
-const ALLOWED_ADMIN_EMAIL = "sachinrv19@gmail.com";
+const ALLOWED_ADMIN_EMAIL = process.env.ALLOWED_ADMIN_EMAIL || "sachinrv19@gmail.com";
 
 export async function sendOtpAction(formData: FormData) {
     const email = formData.get("email") as string;
