@@ -1,9 +1,0 @@
-Environment variables loaded from .env
-Prisma schema loaded from prisma\schema.prisma
-
-Γ£ö Generated Prisma Client (v6.4.1) to .\..\..\node_modules\.pnpm\@prisma+client@6.4.1_prisma_e697c467828edf08e3025d15c7caddbc\node_modules\@prisma\client in 70ms
-
-Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-
-Tip: Curious about the SQL queries Prisma ORM generates? Optimize helps you enhance your visibility: https://pris.ly/tip-2-optimize
-
