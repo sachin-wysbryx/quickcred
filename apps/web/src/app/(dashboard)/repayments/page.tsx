@@ -90,7 +90,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
                 </div>
             </div>
 
-            <div className="bg-card p-6 rounded-3xl border border-border shadow-premium flex flex-col lg:flex-row gap-6 items-center">
+            <div className="bg-card p-6 rounded-3xl border border-border shadow-premium flex flex-col lg:flex-row gap-6 items-center relative z-20">
                 <div className="flex-1 w-full flex flex-col md:flex-row gap-6">
                     <RepaymentStatusFilter />
                     <div className="flex-1">
@@ -110,7 +110,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
                     const remainingLoanBalance = totalRepayment - totalPaidSoFar;
 
                     return (
-                        <Card key={r.id} className={`relative overflow-hidden group transition-all hover:scale-[1.01] ${isPaid ? 'opacity-80' : ''}`}>
+                        <Card key={r.id} className={`h-full relative overflow-hidden group transition-all hover:scale-[1.01] ${isPaid ? 'opacity-80' : ''}`} contentClassName="flex flex-col h-full">
                             <div className="flex justify-between items-start mb-6">
                                 <div>
                                     {r.isOverdue ? (
@@ -154,7 +154,7 @@ export default async function RepaymentsPage({ searchParams }: RepaymentsPagePro
                                 </a>
                             </div>
 
-                            <div className="mt-8 pt-6 border-t border-border/50 flex items-center justify-between gap-4">
+                            <div className="mt-auto pt-6 border-t border-border/50 flex items-center justify-between gap-4">
                                 <div className="flex flex-col">
                                     <span className="text-[8px] font-black uppercase text-muted-foreground tracking-widest">Remaining Balance</span>
                                     <span className="text-lg font-black text-foreground tracking-tighter tabular-nums">{formatCurrency(remainingLoanBalance)}</span>

@@ -1,11 +1,12 @@
 import React from 'react';
 
-export const Card = ({ children, className = "", title, icon: Icon, gradient = false }: {
+export const Card = ({ children, className = "", title, icon: Icon, gradient = false, contentClassName = "" }: {
     children: React.ReactNode;
     className?: string;
     title?: string;
     icon?: React.ElementType;
     gradient?: boolean;
+    contentClassName?: string;
 }) => {
     return (
         <div className={`
@@ -23,7 +24,7 @@ export const Card = ({ children, className = "", title, icon: Icon, gradient = f
                     {Icon && <Icon className={`w-5 h-5 ${gradient ? 'text-white/50' : 'text-muted-foreground'}`} />}
                 </div>
             )}
-            <div className={`${title ? 'p-8 pt-2' : 'p-8'}`}>
+            <div className={`${title ? 'p-8 pt-2' : 'p-8'} ${contentClassName}`}>
                 {children}
             </div>
         </div>

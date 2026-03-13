@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@repo/ui";
 import { processCustomPayment } from "@/lib/actions/repayment";
 import { formatCurrency } from "@repo/utils";
@@ -28,7 +29,20 @@ export function CustomPaymentButton({
     remainingBalance
 }: CustomPaymentModalProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const [isPending, startTransition] = useTransition();
+
+    useEffect(() => {
+        setMounted(true);
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, [isOpen]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -44,6 +58,19 @@ export function CustomPaymentButton({
         });
     };
 
+    if (!mounted) {
+        return (
+            <Button
+                variant="secondary"
+                size="sm"
+                className="rounded-xl font-black text-[10px] uppercase tracking-widest"
+            >
+                <Wallet className="w-4 h-4 mr-1.5" />
+                Custom
+            </Button>
+        );
+    }
+
     return (
         <>
             <Button
@@ -56,10 +83,10 @@ export function CustomPaymentButton({
                 Custom
             </Button>
 
-            {isOpen && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            {isOpen && createPortal(
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div
-                        className="absolute inset-0 bg-background/80 backdrop-blur-md animate-in fade-in duration-300"
+                        className="absolute inset-0 bg-background/60 backdrop-blur-xl animate-in fade-in duration-300"
                         onClick={() => setIsOpen(false)}
                     ></div>
 
@@ -148,7 +175,8 @@ export function CustomPaymentButton({
                             </div>
                         </form>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );
