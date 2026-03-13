@@ -37,13 +37,18 @@ export default function DashboardLayout({
         <div className="h-screen bg-background flex flex-col md:flex-row transition-colors duration-300 overflow-hidden">
             {/* Desktop Sidebar */}
             <aside className="hidden md:flex w-72 bg-card border-r border-border flex-col flex-shrink-0 shadow-premium fixed left-0 top-0 h-screen overflow-y-auto z-40">
-                <div className="h-20 flex items-center px-8 border-b border-border/50">
-                    <div className="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-indigo-500/20">
-                        <CircleDollarSign className="text-white w-6 h-6" />
+                <div className="h-24 flex items-center px-8 border-b border-border/50">
+                    <div className="w-12 h-12 gradient-purple rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-indigo-500/20">
+                        <CircleDollarSign className="text-white w-7 h-7" />
                     </div>
-                    <span className="text-xl font-black text-foreground tracking-tighter">
-                        QuickCred<span className="text-primary font-light"></span>
-                    </span>
+                    <div className="flex flex-col">
+                        <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 tracking-tighter leading-none">
+                            QuickCred
+                        </span>
+                        <span className="text-[10px] font-semibold text-muted-foreground/60 tracking-[0.2em] uppercase mt-1">
+                            FINANCE
+                        </span>
+                    </div>
                 </div>
 
                 <nav className="p-6 space-y-2 flex-1 pt-8">
@@ -101,12 +106,17 @@ export default function DashboardLayout({
             >
                 <div className="h-20 flex items-center justify-between px-6 border-b border-border/50">
                     <div className="flex items-center">
-                        <div className="w-9 h-9 gradient-purple rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-indigo-500/20">
-                            <CircleDollarSign className="text-white w-5 h-5" />
+                        <div className="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center mr-3 shadow-lg shadow-indigo-500/20">
+                            <CircleDollarSign className="text-white w-6 h-6" />
                         </div>
-                        <span className="text-lg font-black text-foreground tracking-tighter">
-                            QuickCred<span className="text-primary font-light">Admin</span>
-                        </span>
+                        <div className="flex flex-col">
+                            <span className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 tracking-tighter leading-none">
+                                QuickCred
+                            </span>
+                            <span className="text-[10px] font-semibold text-muted-foreground/60 tracking-[0.2em] uppercase mt-0.5">
+                                FINANCE
+                            </span>
+                        </div>
                     </div>
                     <button
                         id="mobile-sidebar-close-btn"

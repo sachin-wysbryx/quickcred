@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, User, Settings } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth/logoutAction";
 import { useState, useRef, useEffect } from "react";
 
@@ -35,13 +35,6 @@ export function ProfileDropdown({ email }: { email: string }) {
                     </div>
                     
                     <div className="p-2">
-                        <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground rounded-xl transition-colors">
-                            <Settings className="w-4 h-4" />
-                            Account Settings
-                        </button>
-                    </div>
-
-                    <div className="p-2 border-t border-border/50">
                         <form action={logoutAction}>
                             <button
                                 type="submit"
