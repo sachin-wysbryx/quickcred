@@ -26,3 +26,8 @@ next-env.d.ts
 # prisma
 /packages/db/prisma/*.db
 /packages/db/prisma/*.db-journal
+
+# testing
+/playwright-report/
+/test-results/
+/test-screenshots/

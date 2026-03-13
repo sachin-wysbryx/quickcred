@@ -2,7 +2,6 @@
 
 A modern, high-performance fintech admin dashboard built for loan management, customer tracking, and automated repayment scheduling.
 
-![QuickCred Preview](https://antigravity.google/placeholder-ui-preview.png)
 
 ## 🚀 Overview
 
