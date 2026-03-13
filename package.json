@@ -14,7 +14,8 @@
     "lint": "pnpm --filter web lint",
     "db:generate": "pnpm --filter @repo/db exec prisma generate",
     "db:push": "pnpm --filter @repo/db exec prisma db push",
-    "reset:data": "npx --yes tsx scripts/resetDatabase.ts"
+    "reset:data": "npx --yes tsx scripts/resetDatabase.ts",
+    "test": "vitest"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -27,6 +28,15 @@
     ]
   },
   "devDependencies": {
-    "next": "16.1.6"
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.0",
+    "jsdom": "^28.1.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "vitest": "^4.1.0"
   }
 }
