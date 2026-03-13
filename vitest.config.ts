@@ -8,6 +8,14 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./testing/setup.ts'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/cypress/**',
+      '**/.{idea,git,cache,output,temp}/**',
+      '**/{karma,rollup,webpack,vite,vitest,ava,babel,nyc,cypress,tsup,build}.config.*',
+      '**/testing/e2e/**',
+    ],
     alias: {
       '@repo/utils': path.resolve(__dirname, './packages/utils/src'),
       '@repo/ui': path.resolve(__dirname, './packages/ui/src'),
